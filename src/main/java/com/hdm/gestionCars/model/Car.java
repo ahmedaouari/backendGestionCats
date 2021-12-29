@@ -3,8 +3,7 @@ package com.hdm.gestionCars.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Embedded;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,8 +16,7 @@ public class Car {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
-	
+
 	private String model;
 	private String variante;
 	private String conception;
@@ -26,9 +24,6 @@ public class Car {
 	private String inscription;
 	private String marque;
 	// interieur 
-	
-   private String MateriauInterieur;
-	private String Airbags;
 	// moteur 
 	private String kilometre;
 	private String Puissance;
@@ -36,16 +31,13 @@ public class Car {
 	private String carburant;
 	private String transmission;
 	private String CO2;
-	
-	
-	private String CouleurExterieure;
-	private String CouleurIntErieure;
+
 	private String TypePeinture;
 	private int NbrPortes;
 	private int nbrplaces;
 	private int nbrCles;
 	private String evaluateur;
-
+	
 	private String PrixReserve;
 	private String  Imposition	;
 	private String  PrixVente;	
@@ -57,12 +49,47 @@ public class Car {
 
 
 	
-@OneToMany(mappedBy = "car")
-private Set<AttelageRemorque> attelageRemorques = new HashSet<>();
 
 @OneToOne
 @JoinColumn(name = "fabricant_key", unique = true)
 private  Fabricant fabricant;
+
+@OneToOne
+@JoinColumn(name = "CouleurExterieur", unique = true)
+private CouleurExterieur CouleurExterieur;
+
+@OneToOne
+@JoinColumn(name = "CouleurInterieur", unique = true)
+private CouleurInterieur CouleurInterieur;
+
+@OneToMany(mappedBy = "car")
+private Set<AttelageRemorque> attelageRemorques = new HashSet<>();
+
+@OneToMany(mappedBy = "car")
+ private   Set<AideStationnement> AideStationnements= new HashSet<>();;
+
+@OneToMany(mappedBy = "car")
+private   Set<RegulateurVitesse> regulateurVitesse =new HashSet<>();;
+
+@OneToMany(mappedBy = "car")
+  private   Set<AutresEquipement> autresEquipements= new HashSet<>();;
+@OneToMany(mappedBy = "car")
+private  Set<MateriauIntérieur> materiauIntérieur= new HashSet<>(); ;
+@OneToMany(mappedBy = "car")
+private  Set<Autre>  autres =new HashSet<>(); ;
+@OneToMany(mappedBy = "car")
+private  Set<Climatisation> Climatisations =new HashSet<>();;
+
+@OneToMany(mappedBy = "car")
+private  Set<AutresAmenagementsInt> autresAmenagementsInterieurs =new HashSet<>();;
+
+@OneToMany(mappedBy = "car")
+private  Set<PienceJointe>  pienceJointes = new HashSet<>();;
+
+@OneToMany(mappedBy = "car")
+private  Set<Document>  documents  =new HashSet<>();;
+
+
 
 
 

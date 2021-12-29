@@ -17,6 +17,8 @@ public class AutreEquipement {
 	private String nameEN;
 	
 	
+	 
+	
 	
 	 public AutreEquipement(String nameFr, String nameAlg, String nameEN) {
 		super();

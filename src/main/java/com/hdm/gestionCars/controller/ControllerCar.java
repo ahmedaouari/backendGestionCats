@@ -26,15 +26,15 @@ public class ControllerCar {
 		return  repositoryCar.findAll();
 	}
 	@PostMapping
-	public Car create(){
+	public void create(){
 		AutrInformations autreInformations =new AutrInformations("red", "red", "typePeinture", 12, 4, 2, "evaluateur");
 		/*Moteur moteur=new Moteur();
 		Prix prix=new Prix();*/
-		AttelageRemorque attelageRemorque=new AttelageRemorque("nameFr", "nameAlg", "nameEN");
-		Car c=new Car("fabricant", "model", "variante", "conception", "ailette", "inscription", "marque", "materiauInterieur", "airbags", "kilometre", "puissance", "capacite", "carburant", "transmission", "cO2", "couleurExterieure", "couleurIntErieure", "typePeinture",12, 3, 3, "evaluateur", "prixReserve", "imposition", "prixVente", "acheteurs", "prixAchat", "vendeur", "coutsSupplementaires", "ramasse");
-		c.setAttelageRemorque(attelageRemorque);
+	//	AttelageRemorque attelageRemorque=new AttelageRemorque("nameFr", "nameAlg", "nameEN");
+	//	Car c=new Car("fabricant", "model", "variante", "conception", "ailette", "inscription", "marque", "materiauInterieur", "airbags", "kilometre", "puissance", "capacite", "carburant", "transmission", "cO2", "couleurExterieure", "couleurIntErieure", "typePeinture",12, 3, 3, "evaluateur", "prixReserve", "imposition", "prixVente", "acheteurs", "prixAchat", "vendeur", "coutsSupplementaires", "ramasse");
+		//c.setAttelageRemorque(attelageRemorque);
 		//c.set
-	return 	repositoryCar.save(c);	
+	//return 	repositoryCar.save(c);	
 	}
 
 }
