@@ -1,11 +1,10 @@
 package com.hdm.gestionCars.controller;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +14,10 @@ import com.hdm.gestionCars.DAO.RepositoryColorExterior;
 import com.hdm.gestionCars.DAO.RepositoryColorInterior;
 import com.hdm.gestionCars.DAO.RepositoryFabricant;
 import com.hdm.gestionCars.model.Car;
+import com.hdm.gestionCars.model.CouleurExterieur;
+import com.hdm.gestionCars.model.CouleurInterieur;
+import com.hdm.gestionCars.model.Fabricant;
 import com.hdm.gestionCars.request.CarRequest;
-import com.hdm.gestionCars.response.CarResponse;
 import com.hdm.gestionCars.service.ServiceCar;
 
 @RestController
@@ -41,8 +42,7 @@ public class ControllerCar {
 	}
 
 	@PostMapping(value = "/new-car")
-	public CarResponse createNewCarInTheSystem(@RequestBody CarRequest request)
-			throws IllegalAccessException, InvocationTargetException {
+	public Car createNewCarInTheSystem(@RequestBody CarRequest request) {
 
 		Car car = new Car(request.getModel(), request.getVariante(), request.getConception(), request.getAilette(),
 				request.getInscription(), request.getMarque(), request.getKilometre(), request.getPuissance(),
@@ -51,14 +51,24 @@ public class ControllerCar {
 				request.getImposition(), request.getPrixVente(), request.getAcheteurs(), request.getPrixAchat(),
 				request.getVendeur(), request.getCoutsSupplementaires(), request.getRamasse());
 
-		car.setFabricant(request.getFabricant());
-		car.setCouleurExterieur(request.getCouleurExterieur());
-		car.setCouleurInterieur(request.getCouleurInterieur());
+		Fabricant fabricant_ = fabricant.getById(request.getFabricantID());
+		CouleurExterieur exterior_ = exterior.getById(request.getExteriorId());
+		CouleurInterieur interior_ = interior.getById(request.getInteriorId());
+		if (fabricant_ != null && exterior_ != null && interior_ != null) {
+			car.setFabricant(fabricant_);
+			car.setCouleurExterieur(exterior_);
+			car.setCouleurInterieur(interior_);
+		}
 
 		Car save = repositoryCar.save(car);
-		CarResponse response = new CarResponse();
-		BeanUtils.copyProperties(response, save);
-		return response;
+		return save;
+	}
+
+	@GetMapping(value = "/car/{id}")
+	public Car getCarById(@PathVariable(name = "id") Integer id) {
+		Car car = repositoryCar.findCarById(id);
+		return car;
+
 	}
 
 }

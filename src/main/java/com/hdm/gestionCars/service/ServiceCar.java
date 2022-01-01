@@ -22,4 +22,8 @@ public class ServiceCar {
 		return repositoryCar.findAll();
 	}
 
+	public Car findCarById(Integer id) {
+		return repositoryCar.getById(id);
+	}
+
 }

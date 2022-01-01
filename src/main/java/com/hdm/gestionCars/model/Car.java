@@ -1,9 +1,9 @@
 package com.hdm.gestionCars.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,12 +13,19 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-public class Car {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Car implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9157796402958090481L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer carId;
 
 	private String model;
 	private String variante;
@@ -29,39 +36,39 @@ public class Car {
 	// interieur
 	// moteur
 	private String kilometre;
-	private String Puissance;
-	private String Capacite;
+	private String puissance;
+	private String capacite;
 	private String carburant;
 	private String transmission;
-	private String CO2;
+	private String cO2;
 
-	private String TypePeinture;
-	private int NbrPortes;
+	private String typePeinture;
+	private int nbrPortes;
 	private int nbrplaces;
 	private int nbrCles;
 	private String evaluateur;
 
-	private String PrixReserve;
-	private String Imposition;
-	private String PrixVente;
-	private String Acheteurs;
+	private String prixReserve;
+	private String imposition;
+	private String prixVente;
+	private String acheteurs;
 	private String prixAchat;
-	private String Vendeur;
-	private String CoutsSupplementaires;
-	private String Ramasse;
+	private String vendeur;
+	private String coutsSupplementaires;
+	private String ramasse;
 
-	@OneToOne(cascade = { CascadeType.PERSIST })
-	@JoinColumn(name = "fabricant_key", unique = true)
+	@OneToOne
+	@JoinColumn(name = "fabricant_key")
 	@JsonIgnore
 	private Fabricant fabricant;
 
-	@OneToOne(cascade = { CascadeType.PERSIST })
-	@JoinColumn(name = "couleurExterieur_key", unique = true)
+	@OneToOne
+	@JoinColumn(name = "couleurExterieur_key")
 	@JsonIgnore
 	private CouleurExterieur couleurExterieur;
 
-	@OneToOne(cascade = { CascadeType.PERSIST })
-	@JoinColumn(name = "couleurInterieur_key", unique = true)
+	@OneToOne
+	@JoinColumn(name = "couleurInterieur_key")
 	@JsonIgnore
 	private CouleurInterieur couleurInterieur;
 
@@ -107,20 +114,15 @@ public class Car {
 
 	public Car() {
 	}
+	
+	
 
-	public Car(int id, String model, String variante, String conception, String ailette, String inscription,
-			String marque, String kilometre, String puissance, String capacite, String carburant, String transmission,
-			String cO2, String typePeinture, int nbrPortes, int nbrplaces, int nbrCles, String evaluateur,
-			String prixReserve, String imposition, String prixVente, String acheteurs, String prixAchat, String vendeur,
-			String coutsSupplementaires, String ramasse, Fabricant fabricant,
-			com.hdm.gestionCars.model.CouleurExterieur couleurExterieur,
-			com.hdm.gestionCars.model.CouleurInterieur couleurInterieur, Set<AttelageRemorque> attelageRemorques,
-			Set<AideStationnement> aideStationnements, Set<RegulateurVitesse> regulateurVitesse,
-			Set<AutresEquipement> autresEquipements, Set<MateriauIntérieur> materiauIntérieur, Set<Autre> autres,
-			Set<Climatisation> climatisations, Set<AutresAmenagementsInt> autresAmenagementsInterieurs,
-			Set<PienceJointe> pienceJointes, Set<Document> documents) {
+	public Car(String model, String variante, String conception, String ailette, String inscription, String marque,
+			String kilometre, String puissance, String capacite, String carburant, String transmission, String cO2,
+			String typePeinture, int nbrPortes, int nbrplaces, int nbrCles, String evaluateur, String prixReserve,
+			String imposition, String prixVente, String acheteurs, String prixAchat, String vendeur,
+			String coutsSupplementaires, String ramasse) {
 		super();
-		this.id = id;
 		this.model = model;
 		this.variante = variante;
 		this.conception = conception;
@@ -128,27 +130,68 @@ public class Car {
 		this.inscription = inscription;
 		this.marque = marque;
 		this.kilometre = kilometre;
-		Puissance = puissance;
-		Capacite = capacite;
+		this.puissance = puissance;
+		this.capacite = capacite;
 		this.carburant = carburant;
 		this.transmission = transmission;
-		CO2 = cO2;
-		TypePeinture = typePeinture;
-		NbrPortes = nbrPortes;
+		this.cO2 = cO2;
+		this.typePeinture = typePeinture;
+		this.nbrPortes = nbrPortes;
 		this.nbrplaces = nbrplaces;
 		this.nbrCles = nbrCles;
 		this.evaluateur = evaluateur;
-		PrixReserve = prixReserve;
-		Imposition = imposition;
-		PrixVente = prixVente;
-		Acheteurs = acheteurs;
+		this.prixReserve = prixReserve;
+		this.imposition = imposition;
+		this.prixVente = prixVente;
+		this.acheteurs = acheteurs;
 		this.prixAchat = prixAchat;
-		Vendeur = vendeur;
-		CoutsSupplementaires = coutsSupplementaires;
-		Ramasse = ramasse;
+		this.vendeur = vendeur;
+		this.coutsSupplementaires = coutsSupplementaires;
+		this.ramasse = ramasse;
+	}
+
+
+
+	public Car(Integer carId, String model, String variante, String conception, String ailette, String inscription,
+			String marque, String kilometre, String puissance, String capacite, String carburant, String transmission,
+			String cO2, String typePeinture, int nbrPortes, int nbrplaces, int nbrCles, String evaluateur,
+			String prixReserve, String imposition, String prixVente, String acheteurs, String prixAchat, String vendeur,
+			String coutsSupplementaires, String ramasse, Fabricant fabricant, CouleurExterieur couleurExterieur,
+			CouleurInterieur couleurInterieur, Set<AttelageRemorque> attelageRemorques,
+			Set<AideStationnement> aideStationnements, Set<RegulateurVitesse> regulateurVitesse,
+			Set<AutresEquipement> autresEquipements, Set<MateriauIntérieur> materiauIntérieur, Set<Autre> autres,
+			Set<Climatisation> climatisations, Set<AutresAmenagementsInt> autresAmenagementsInterieurs,
+			Set<PienceJointe> pienceJointes, Set<Document> documents) {
+		super();
+		this.carId = carId;
+		this.model = model;
+		this.variante = variante;
+		this.conception = conception;
+		this.ailette = ailette;
+		this.inscription = inscription;
+		this.marque = marque;
+		this.kilometre = kilometre;
+		this.puissance = puissance;
+		this.capacite = capacite;
+		this.carburant = carburant;
+		this.transmission = transmission;
+		this.cO2 = cO2;
+		this.typePeinture = typePeinture;
+		this.nbrPortes = nbrPortes;
+		this.nbrplaces = nbrplaces;
+		this.nbrCles = nbrCles;
+		this.evaluateur = evaluateur;
+		this.prixReserve = prixReserve;
+		this.imposition = imposition;
+		this.prixVente = prixVente;
+		this.acheteurs = acheteurs;
+		this.prixAchat = prixAchat;
+		this.vendeur = vendeur;
+		this.coutsSupplementaires = coutsSupplementaires;
+		this.ramasse = ramasse;
 		this.fabricant = fabricant;
-		couleurExterieur = couleurExterieur;
-		couleurInterieur = couleurInterieur;
+		this.couleurExterieur = couleurExterieur;
+		this.couleurInterieur = couleurInterieur;
 		this.attelageRemorques = attelageRemorques;
 		AideStationnements = aideStationnements;
 		this.regulateurVitesse = regulateurVitesse;
@@ -165,7 +208,12 @@ public class Car {
 			String kilometre, String puissance, String capacite, String carburant, String transmission, String cO2,
 			String typePeinture, int nbrPortes, int nbrplaces, int nbrCles, String evaluateur, String prixReserve,
 			String imposition, String prixVente, String acheteurs, String prixAchat, String vendeur,
-			String coutsSupplementaires, String ramasse) {
+			String coutsSupplementaires, String ramasse, Fabricant fabricant, CouleurExterieur couleurExterieur,
+			CouleurInterieur couleurInterieur, Set<AttelageRemorque> attelageRemorques,
+			Set<AideStationnement> aideStationnements, Set<RegulateurVitesse> regulateurVitesse,
+			Set<AutresEquipement> autresEquipements, Set<MateriauIntérieur> materiauIntérieur, Set<Autre> autres,
+			Set<Climatisation> climatisations, Set<AutresAmenagementsInt> autresAmenagementsInterieurs,
+			Set<PienceJointe> pienceJointes, Set<Document> documents) {
 		super();
 		this.model = model;
 		this.variante = variante;
@@ -174,32 +222,45 @@ public class Car {
 		this.inscription = inscription;
 		this.marque = marque;
 		this.kilometre = kilometre;
-		Puissance = puissance;
-		Capacite = capacite;
+		this.puissance = puissance;
+		this.capacite = capacite;
 		this.carburant = carburant;
 		this.transmission = transmission;
-		CO2 = cO2;
-		TypePeinture = typePeinture;
-		NbrPortes = nbrPortes;
+		this.cO2 = cO2;
+		this.typePeinture = typePeinture;
+		this.nbrPortes = nbrPortes;
 		this.nbrplaces = nbrplaces;
 		this.nbrCles = nbrCles;
 		this.evaluateur = evaluateur;
-		PrixReserve = prixReserve;
-		Imposition = imposition;
-		PrixVente = prixVente;
-		Acheteurs = acheteurs;
+		this.prixReserve = prixReserve;
+		this.imposition = imposition;
+		this.prixVente = prixVente;
+		this.acheteurs = acheteurs;
 		this.prixAchat = prixAchat;
-		Vendeur = vendeur;
-		CoutsSupplementaires = coutsSupplementaires;
-		Ramasse = ramasse;
+		this.vendeur = vendeur;
+		this.coutsSupplementaires = coutsSupplementaires;
+		this.ramasse = ramasse;
+		this.fabricant = fabricant;
+		this.couleurExterieur = couleurExterieur;
+		this.couleurInterieur = couleurInterieur;
+		this.attelageRemorques = attelageRemorques;
+		AideStationnements = aideStationnements;
+		this.regulateurVitesse = regulateurVitesse;
+		this.autresEquipements = autresEquipements;
+		this.materiauIntérieur = materiauIntérieur;
+		this.autres = autres;
+		Climatisations = climatisations;
+		this.autresAmenagementsInterieurs = autresAmenagementsInterieurs;
+		this.pienceJointes = pienceJointes;
+		this.documents = documents;
 	}
 
-	public int getId() {
-		return id;
+	public Integer getCarId() {
+		return carId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setCarId(Integer carId) {
+		this.carId = carId;
 	}
 
 	public String getModel() {
@@ -259,19 +320,19 @@ public class Car {
 	}
 
 	public String getPuissance() {
-		return Puissance;
+		return puissance;
 	}
 
 	public void setPuissance(String puissance) {
-		Puissance = puissance;
+		this.puissance = puissance;
 	}
 
 	public String getCapacite() {
-		return Capacite;
+		return capacite;
 	}
 
 	public void setCapacite(String capacite) {
-		Capacite = capacite;
+		this.capacite = capacite;
 	}
 
 	public String getCarburant() {
@@ -290,28 +351,28 @@ public class Car {
 		this.transmission = transmission;
 	}
 
-	public String getCO2() {
-		return CO2;
+	public String getcO2() {
+		return cO2;
 	}
 
-	public void setCO2(String cO2) {
-		CO2 = cO2;
+	public void setcO2(String cO2) {
+		this.cO2 = cO2;
 	}
 
 	public String getTypePeinture() {
-		return TypePeinture;
+		return typePeinture;
 	}
 
 	public void setTypePeinture(String typePeinture) {
-		TypePeinture = typePeinture;
+		this.typePeinture = typePeinture;
 	}
 
 	public int getNbrPortes() {
-		return NbrPortes;
+		return nbrPortes;
 	}
 
 	public void setNbrPortes(int nbrPortes) {
-		NbrPortes = nbrPortes;
+		this.nbrPortes = nbrPortes;
 	}
 
 	public int getNbrplaces() {
@@ -339,35 +400,35 @@ public class Car {
 	}
 
 	public String getPrixReserve() {
-		return PrixReserve;
+		return prixReserve;
 	}
 
 	public void setPrixReserve(String prixReserve) {
-		PrixReserve = prixReserve;
+		this.prixReserve = prixReserve;
 	}
 
 	public String getImposition() {
-		return Imposition;
+		return imposition;
 	}
 
 	public void setImposition(String imposition) {
-		Imposition = imposition;
+		this.imposition = imposition;
 	}
 
 	public String getPrixVente() {
-		return PrixVente;
+		return prixVente;
 	}
 
 	public void setPrixVente(String prixVente) {
-		PrixVente = prixVente;
+		this.prixVente = prixVente;
 	}
 
 	public String getAcheteurs() {
-		return Acheteurs;
+		return acheteurs;
 	}
 
 	public void setAcheteurs(String acheteurs) {
-		Acheteurs = acheteurs;
+		this.acheteurs = acheteurs;
 	}
 
 	public String getPrixAchat() {
@@ -379,27 +440,27 @@ public class Car {
 	}
 
 	public String getVendeur() {
-		return Vendeur;
+		return vendeur;
 	}
 
 	public void setVendeur(String vendeur) {
-		Vendeur = vendeur;
+		this.vendeur = vendeur;
 	}
 
 	public String getCoutsSupplementaires() {
-		return CoutsSupplementaires;
+		return coutsSupplementaires;
 	}
 
 	public void setCoutsSupplementaires(String coutsSupplementaires) {
-		CoutsSupplementaires = coutsSupplementaires;
+		this.coutsSupplementaires = coutsSupplementaires;
 	}
 
 	public String getRamasse() {
-		return Ramasse;
+		return ramasse;
 	}
 
 	public void setRamasse(String ramasse) {
-		Ramasse = ramasse;
+		this.ramasse = ramasse;
 	}
 
 	public Fabricant getFabricant() {
@@ -415,7 +476,7 @@ public class Car {
 	}
 
 	public void setCouleurExterieur(CouleurExterieur couleurExterieur) {
-		couleurExterieur = couleurExterieur;
+		this.couleurExterieur = couleurExterieur;
 	}
 
 	public CouleurInterieur getCouleurInterieur() {
@@ -423,7 +484,7 @@ public class Car {
 	}
 
 	public void setCouleurInterieur(CouleurInterieur couleurInterieur) {
-		couleurInterieur = couleurInterieur;
+		this.couleurInterieur = couleurInterieur;
 	}
 
 	public Set<AttelageRemorque> getAttelageRemorques() {
@@ -504,6 +565,10 @@ public class Car {
 
 	public void setDocuments(Set<Document> documents) {
 		this.documents = documents;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

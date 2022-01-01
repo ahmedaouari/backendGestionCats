@@ -1,9 +1,5 @@
 package com.hdm.gestionCars.request;
 
-import com.hdm.gestionCars.model.CouleurExterieur;
-import com.hdm.gestionCars.model.CouleurInterieur;
-import com.hdm.gestionCars.model.Fabricant;
-
 public class CarRequest {
 
 	private int id;
@@ -38,11 +34,11 @@ public class CarRequest {
 	private String coutsSupplementaires;
 	private String ramasse;
 
-	private Fabricant fabricant;
+	private long fabricantID;
 
-	private CouleurExterieur couleurExterieur;
+	private long exteriorId;
 
-	private CouleurInterieur couleurInterieur;
+	private long interiorId;
 
 	public CarRequest() {
 	}
@@ -51,8 +47,7 @@ public class CarRequest {
 			String marque, String kilometre, String puissance, String capacite, String carburant, String transmission,
 			String cO2, String typePeinture, int nbrPortes, int nbrplaces, int nbrCles, String evaluateur,
 			String prixReserve, String imposition, String prixVente, String acheteurs, String prixAchat, String vendeur,
-			String coutsSupplementaires, String ramasse, Fabricant fabricant, CouleurExterieur couleurExterieur,
-			CouleurInterieur couleurInterieur) {
+			String coutsSupplementaires, String ramasse, long fabricant, long couleurExterieur, long couleurInterieur) {
 		super();
 		this.id = id;
 		this.model = model;
@@ -80,17 +75,16 @@ public class CarRequest {
 		this.vendeur = vendeur;
 		this.coutsSupplementaires = coutsSupplementaires;
 		this.ramasse = ramasse;
-		this.fabricant = fabricant;
-		this.couleurExterieur = couleurExterieur;
-		this.couleurInterieur = couleurInterieur;
+		this.fabricantID = fabricant;
+		this.exteriorId = couleurExterieur;
+		this.interiorId = couleurInterieur;
 	}
 
 	public CarRequest(String model, String variante, String conception, String ailette, String inscription,
 			String marque, String kilometre, String puissance, String capacite, String carburant, String transmission,
 			String cO2, String typePeinture, int nbrPortes, int nbrplaces, int nbrCles, String evaluateur,
 			String prixReserve, String imposition, String prixVente, String acheteurs, String prixAchat, String vendeur,
-			String coutsSupplementaires, String ramasse, Fabricant fabricant, CouleurExterieur couleurExterieur,
-			CouleurInterieur couleurInterieur) {
+			String coutsSupplementaires, String ramasse, long fabricant, long couleurExterieur, long couleurInterieur) {
 		super();
 		this.model = model;
 		this.variante = variante;
@@ -117,12 +111,10 @@ public class CarRequest {
 		this.vendeur = vendeur;
 		this.coutsSupplementaires = coutsSupplementaires;
 		this.ramasse = ramasse;
-		this.fabricant = fabricant;
-		this.couleurExterieur = couleurExterieur;
-		this.couleurInterieur = couleurInterieur;
+		this.fabricantID = fabricant;
+		this.exteriorId = couleurExterieur;
+		this.interiorId = couleurInterieur;
 	}
-	
-	
 
 	public int getId() {
 		return id;
@@ -332,28 +324,28 @@ public class CarRequest {
 		this.ramasse = ramasse;
 	}
 
-	public Fabricant getFabricant() {
-		return fabricant;
+	public long getFabricantID() {
+		return fabricantID;
 	}
 
-	public void setFabricant(Fabricant fabricant) {
-		this.fabricant = fabricant;
+	public void setFabricantID(long fabricantID) {
+		this.fabricantID = fabricantID;
 	}
 
-	public CouleurExterieur getCouleurExterieur() {
-		return couleurExterieur;
+	public long getExteriorId() {
+		return exteriorId;
 	}
 
-	public void setCouleurExterieur(CouleurExterieur couleurExterieur) {
-		this.couleurExterieur = couleurExterieur;
+	public void setExteriorId(long exteriorId) {
+		this.exteriorId = exteriorId;
 	}
 
-	public CouleurInterieur getCouleurInterieur() {
-		return couleurInterieur;
+	public long getInteriorId() {
+		return interiorId;
 	}
 
-	public void setCouleurInterieur(CouleurInterieur couleurInterieur) {
-		this.couleurInterieur = couleurInterieur;
+	public void setInteriorId(long interiorId) {
+		this.interiorId = interiorId;
 	}
 
 }

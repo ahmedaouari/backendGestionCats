@@ -1,5 +1,7 @@
 package com.hdm.gestionCars.model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Fabricant {
+public class Fabricant implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8012619173552562831L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
