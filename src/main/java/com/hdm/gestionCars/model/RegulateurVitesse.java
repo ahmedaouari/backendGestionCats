@@ -27,6 +27,12 @@ public class RegulateurVitesse {
 		this.nameEN = nameEN;
 		this.car = car;
 	}
+	public RegulateurVitesse(String nameFr, String nameAlg, String nameEN) {
+		super();
+		this.nameFr = nameFr;
+		this.nameAlg = nameAlg;
+		this.nameEN = nameEN;
+	}
 	public Car getCar() {
 		return car;
 	}

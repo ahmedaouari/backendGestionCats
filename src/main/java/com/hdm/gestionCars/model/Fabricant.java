@@ -28,6 +28,9 @@ public class Fabricant implements Serializable {
 	@OneToOne(mappedBy = "fabricant", cascade = { CascadeType.ALL })
 	private Car car;
 
+	
+	
+
 	public Fabricant() {
 	}
 

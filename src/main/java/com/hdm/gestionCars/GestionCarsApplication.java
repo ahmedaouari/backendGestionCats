@@ -16,8 +16,7 @@ import com.hdm.gestionCars.service.ServiceCar;
 public class GestionCarsApplication {
 
 
-	@Autowired
-	static ServiceCar serviceCar =new ServiceCar();
+	
 	public static void main(String[] args) { SpringApplication.run(GestionCarsApplication.class, args);
 	
 	

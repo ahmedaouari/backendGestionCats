@@ -17,7 +17,7 @@ public class Autre {
 	    private String nameEn;
 	    
 	    @ManyToOne
-		@JoinColumn(name = "car_key", nullable = false)
+		@JoinColumn(name = "car", nullable = true)
 		private Car car;
 
 }

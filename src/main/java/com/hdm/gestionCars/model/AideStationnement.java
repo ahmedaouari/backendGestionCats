@@ -16,7 +16,7 @@ private String nameAlg;
 private String nameEN;
 
 @ManyToOne
-@JoinColumn(name = "car")
+@JoinColumn(name = "car",unique = false, nullable = true)
   private Car car;
 
 
