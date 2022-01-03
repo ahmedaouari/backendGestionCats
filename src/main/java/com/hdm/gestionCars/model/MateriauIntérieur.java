@@ -21,6 +21,10 @@ public class MateriauIntérieur {
 	@JoinColumn(name = "car", nullable = true)
 	private Car car;
 
+	public MateriauIntérieur() {
+		super();
+	}
+
 	public MateriauIntérieur(String nameFr, String nameAlm, String nameEn) {
 		super();
 		this.nameFr = nameFr;

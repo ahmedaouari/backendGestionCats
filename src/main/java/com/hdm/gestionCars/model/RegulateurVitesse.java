@@ -20,6 +20,9 @@ public class RegulateurVitesse {
 	    private Car car;
 	 
 	 
+	public RegulateurVitesse() {
+		super();
+	}
 	public RegulateurVitesse(String nameFr, String nameAlg, String nameEN, Car car) {
 		super();
 		this.nameFr = nameFr;

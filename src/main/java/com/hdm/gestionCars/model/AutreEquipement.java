@@ -17,19 +17,22 @@ public class AutreEquipement {
 	private String nameEN;
 	
 	
+	@ManyToOne
+	@JoinColumn(name = "car")
+	private Car car;
+	
 	 
 	
 	
-	 public AutreEquipement(String nameFr, String nameAlg, String nameEN) {
+	 public AutreEquipement() {
+		super();
+	}
+	public AutreEquipement(String nameFr, String nameAlg, String nameEN) {
 		super();
 		this.nameFr = nameFr;
 		this.nameAlg = nameAlg;
 		this.nameEN = nameEN;
 	}
-	@ManyToOne
-	  @JoinColumn(name = "car")
-	    private Car car;
-	 
 	public Car getCar() {
 		return car;
 	}

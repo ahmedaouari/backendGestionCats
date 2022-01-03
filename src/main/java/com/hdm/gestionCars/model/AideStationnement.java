@@ -26,6 +26,21 @@ public AideStationnement(String nameFr, String nameAlg, String nameEN) {
 	this.nameAlg = nameAlg;
 	this.nameEN = nameEN;
 }
+
+public AideStationnement(long id, String nameFr, String nameAlg, String nameEN, Car car) {
+	super();
+	this.id = id;
+	this.nameFr = nameFr;
+	this.nameAlg = nameAlg;
+	this.nameEN = nameEN;
+	this.car = car;
+}
+
+
+public AideStationnement() {
+	super();
+}
+
 public Car getCar() {
 	return car;
 }
