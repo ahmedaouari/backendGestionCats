@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +32,7 @@ import com.hdm.gestionCars.model.MateriauIntérieur;
 import com.hdm.gestionCars.model.RegulateurVitesse;
 import com.hdm.gestionCars.request.CarRequest;
 import com.hdm.gestionCars.service.ServiceCar;
-
+@CrossOrigin
 @RestController
 @RequestMapping(path = { "/api" })
 public class ControllerCar {
