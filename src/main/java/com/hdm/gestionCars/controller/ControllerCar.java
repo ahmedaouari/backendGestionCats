@@ -92,6 +92,11 @@ public class ControllerCar {
 		return car;
 
 	}
+	@GetMapping(value = "/delete/{id}")
+	public int  deleteCar(@PathVariable(name = "id") Integer id) {
+		return repositoryCar.deleteBuId(id);
+
+	}
 	@GetMapping(value = "/allRepositoryCar")
 	public Map<String, Object> allRepositoryCar(){
 		List<Fabricant> fabricants=repositoryFabricant.findAll();

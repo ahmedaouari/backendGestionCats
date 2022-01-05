@@ -15,8 +15,6 @@ import com.hdm.gestionCars.service.ServiceCar;
 @SpringBootApplication
 public class GestionCarsApplication {
 
-
-	
 	public static void main(String[] args) { SpringApplication.run(GestionCarsApplication.class, args);
 	
 	

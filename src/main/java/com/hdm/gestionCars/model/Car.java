@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -57,46 +58,46 @@ public class Car implements Serializable {
 	private String coutsSupplementaires;
 	private String ramasse;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "fabricant_key")
 	@JsonIgnore
 	private Fabricant fabricant;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "couleurExterieur_key")
 	@JsonIgnore
 	private CouleurExterieur couleurExterieur;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "couleurInterieur_key")
 	@JsonIgnore
 	private CouleurInterieur couleurInterieur;
 
-	@OneToMany(mappedBy = "car")
+	@OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private Set<AttelageRemorque> attelageRemorques = new HashSet<>();
 
-	@OneToMany(mappedBy = "car")
+	@OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private Set<AideStationnement> AideStationnements = new HashSet<>();
 
-	@OneToMany(mappedBy = "car")
+	@OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private Set<RegulateurVitesse> regulateurVitesse = new HashSet<>();
 
-	@OneToMany(mappedBy = "car")
+	@OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private Set<AutresEquipement> autresEquipements = new HashSet<>();
 
-	@OneToMany(mappedBy = "car")
+	@OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private Set<MateriauIntérieur> materiauIntérieur = new HashSet<>();
 
-	@OneToMany(mappedBy = "car")
+	@OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private Set<Autre> autres = new HashSet<>();
 
-	@OneToMany(mappedBy = "car")
+	@OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private Set<Climatisation> Climatisations = new HashSet<>();
 
@@ -104,11 +105,11 @@ public class Car implements Serializable {
 	@JsonIgnore
 	private Set<AutresAmenagementsInt> autresAmenagementsInterieurs = new HashSet<>();
 
-	@OneToMany(mappedBy = "car")
+	@OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private Set<PienceJointe> pienceJointes = new HashSet<>();
 
-	@OneToMany(mappedBy = "car")
+	@OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private Set<Document> documents = new HashSet<>();
 
