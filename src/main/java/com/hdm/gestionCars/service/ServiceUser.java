@@ -3,7 +3,7 @@ package com.hdm.gestionCars.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hdm.gestionCars.DAO.RepositoryEntreprise;
@@ -17,8 +17,8 @@ public class ServiceUser {
 	@Autowired
 	private RepositoryUser repositoryUser;
 
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+//	@Autowired
+//	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Autowired
 	private RepositoryEntreprise entreprise;
@@ -31,35 +31,40 @@ public class ServiceUser {
 		user_.setPhone(user.getPhone());
 		user_.setEmail(user.getEmail());
 		user_.setUsername(user.getUsername());
-		user_.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+//		user_.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		user_.setPassword(user.getPassword());
 		user_.setActive(false);
 		user_.setFonction(user.getFonction());
 
-		Entreprise findByEntrepriseId = entreprise.findByEntrepriseId(1L);
-		if (findByEntrepriseId != null) {
-			user_.setEntreprise(findByEntrepriseId);
-		}
+		Entreprise entreprise = new Entreprise(user.getEntreprise().getEntrepriseName(),
+				user.getEntreprise().getAddresse(), user.getEntreprise().getCodePostal(),
+				user.getEntreprise().getVille(), user.getEntreprise().getPays(), user.getEntreprise().getTva(),
+				user.getEntreprise().getTel(), user.getEntreprise().getEmail(), user.getEntreprise().getLoi(),
+				user.getEntreprise().getGroupeClients(), user.getEntreprise().getRegistrecommerce(),
+				user.getEntreprise().getEnregistrementEntreprise(), user.getEntreprise().getCopiePieceDidentiter());
+
+		user_.setEntreprise(entreprise);
 		return repositoryUser.save(user_);
 	}
 
 	public User addUpUser(User user) {
 		User user_ = new User();
-
 		user_.setFirstname(user.getFirstname());
 		user_.setLastname(user.getLastname());
 		user_.setPhone(user.getPhone());
 		user_.setEmail(user.getEmail());
 		user_.setUsername(user.getUsername());
-		user_.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		user_.setActive(user.isActive());
-		user_.setEnabled(user.isEnabled());
+//		user_.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		user_.setPassword(user.getPassword());
+		user_.setActive(true);
 		user_.setFonction(user.getFonction());
 
-		Entreprise findByEntrepriseId = entreprise.findByEntrepriseId(1L);
+		Entreprise findByEntrepriseId = entreprise.findByEntrepriseId(user.getEntreprise().getEntrepriseId());
+
 		if (findByEntrepriseId != null) {
 			user_.setEntreprise(findByEntrepriseId);
 		}
-		return repositoryUser.save(user_);
+		return repositoryUser.saveAndFlush(user_);
 	}
 
 	public List<User> getListUsers() {

@@ -1,19 +1,9 @@
-package com.hdm.gestionCars.model;
+package com.hdm.gestionCars.request;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import com.hdm.gestionCars.model.Entreprise;
 
-@Entity
-public class User {
+public class UserRequest {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long userId;
 
 	private String firstname;
@@ -25,43 +15,12 @@ public class User {
 	private String fonction;
 	private boolean active;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST })
-	@JoinColumn(name = "entreprise_key", nullable = false)
 	private Entreprise entreprise;
 
-	public User() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public User(Long userId, String firstname, String lastname, String phone, String email, String username,
-			String password, String fonction, boolean active, Entreprise entreprise) {
-		super();
-		this.userId = userId;
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.phone = phone;
-		this.email = email;
-		this.username = username;
-		this.password = password;
-		this.fonction = fonction;
-		this.active = active;
-		this.entreprise = entreprise;
-	}
-
-	public User(String firstname, String lastname, String phone, String email, String username, String password,
-			String fonction, boolean active, Entreprise entreprise) {
-		super();
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.phone = phone;
-		this.email = email;
-		this.username = username;
-		this.password = password;
-		this.fonction = fonction;
-		this.active = active;
-		this.entreprise = entreprise;
-	}
+	private String country;
+	private String state;
+	private String city;
+	private String zipcode;
 
 	public Long getUserId() {
 		return userId;
@@ -141,6 +100,38 @@ public class User {
 
 	public void setEntreprise(Entreprise entreprise) {
 		this.entreprise = entreprise;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
 	}
 
 }
