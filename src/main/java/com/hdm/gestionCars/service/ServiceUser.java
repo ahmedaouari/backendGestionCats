@@ -1,15 +1,20 @@
 package com.hdm.gestionCars.service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
+import com.hdm.gestionCars.DAO.AuthorityRepository;
 import com.hdm.gestionCars.DAO.RepositoryEntreprise;
 import com.hdm.gestionCars.DAO.RepositoryUser;
 import com.hdm.gestionCars.model.Entreprise;
 import com.hdm.gestionCars.model.User;
+import com.hdm.gestionCars.model.components.Authority;
 
 @Service
 public class ServiceUser {
@@ -17,11 +22,11 @@ public class ServiceUser {
 	@Autowired
 	private RepositoryUser repositoryUser;
 
-//	@Autowired
-//	private BCryptPasswordEncoder bCryptPasswordEncoder;
-
 	@Autowired
 	private RepositoryEntreprise entreprise;
+	
+	@Autowired
+	private AuthorityRepository authorityRepository;
 
 	public User signUpUser(User user) {
 		User user_ = new User();
@@ -31,7 +36,6 @@ public class ServiceUser {
 		user_.setPhone(user.getPhone());
 		user_.setEmail(user.getEmail());
 		user_.setUsername(user.getUsername());
-//		user_.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user_.setPassword(user.getPassword());
 		user_.setActive(false);
 		user_.setFonction(user.getFonction());
@@ -99,6 +103,27 @@ public class ServiceUser {
 	public String eraseUserFromTheSystem(Long userId) {
 		repositoryUser.deleteById(userId);
 		return "user with the given id -> " + userId + "deleted successfully";
+	}
+
+	public User getUserByUsername(String username) {
+		User user_ = repositoryUser.findByUsername(username);
+
+		if (user_ != null) {
+			User user = new User(user_.getUserId(), user_.getUsername(), user_.getPassword(), user_.isActive());
+
+			Stream<Stream<String>> streams = user_.getRoles().stream().map(role -> {
+				Set<Authority> authorities = authorityRepository.findByRole(role.getRole());
+				return authorities.stream().map(authority -> authority.getAuthority());
+			});
+			Set<String> collect = streams.flatMap(authorityStream -> authorityStream).collect(Collectors.toSet());
+
+			user.getRoles().stream().forEach(role_ -> collect.add(role_.getRole()));
+			user.setAuthorities(collect.stream().map(authority_ -> new SimpleGrantedAuthority(authority_))
+					.collect(Collectors.toSet()));
+			return user;
+		} else {
+			return null;
+		}
 	}
 
 }
