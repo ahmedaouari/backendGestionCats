@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hdm.gestionCars.DAO.AuthorityRepository;
@@ -24,9 +25,12 @@ public class ServiceUser {
 
 	@Autowired
 	private RepositoryEntreprise entreprise;
-	
+
 	@Autowired
 	private AuthorityRepository authorityRepository;
+
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	public User signUpUser(User user) {
 		User user_ = new User();
@@ -36,7 +40,7 @@ public class ServiceUser {
 		user_.setPhone(user.getPhone());
 		user_.setEmail(user.getEmail());
 		user_.setUsername(user.getUsername());
-		user_.setPassword(user.getPassword());
+		user_.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user_.setActive(false);
 		user_.setFonction(user.getFonction());
 

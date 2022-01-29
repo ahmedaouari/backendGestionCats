@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hdm.gestionCars.model.User;
-import com.hdm.gestionCars.request.UserRequest;
 import com.hdm.gestionCars.service.ServiceUser;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "* ")
 @RestController
 @RequestMapping(path = { "/api" })
 public class UserController {

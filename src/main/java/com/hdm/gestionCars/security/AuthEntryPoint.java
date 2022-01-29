@@ -29,7 +29,7 @@ public class AuthEntryPoint extends BasicAuthenticationEntryPoint {
 	@Override
 	public void afterPropertiesSet() {
 //		Assert.hasText(this.realmName, "realmName must be specified");
-		setRealmName("Witrans-V01");
+		setRealmName("GestionCars");
 		super.afterPropertiesSet();
 	}
 

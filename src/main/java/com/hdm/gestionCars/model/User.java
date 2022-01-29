@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hdm.gestionCars.model.components.Authority;
 import com.hdm.gestionCars.model.components.Role;
 
@@ -38,7 +39,7 @@ public class User implements UserDetails {
 	private String fonction;
 	private boolean active;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST })
+	@ManyToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "entreprise_key", nullable = false)
 	private Entreprise entreprise;
 
