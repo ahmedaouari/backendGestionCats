@@ -1,64 +1,19 @@
 package com.hdm.gestionCars.model.components;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import static com.hdm.gestionCars.model.components.Authority.SUPER_ADMIN_AUTHORITIES;
+import static com.hdm.gestionCars.model.components.Authority.USER_AUTHORITIES;;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.hdm.gestionCars.model.User;
+public enum Role {
+	ROLE_USER(USER_AUTHORITIES), ROLE_SUPER_ADMIN(SUPER_ADMIN_AUTHORITIES);
 
-@Entity
-public class Role {
+	private String[] authorities;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer roleId;
-
-	private String role;
-
-	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	@JoinColumn(name = "user_key")
-	@JsonBackReference
-	private User user;
-
-	public Role() {
-		super();
+	Role(String... authorities) {
+		this.authorities = authorities;
 	}
 
-	public Role(Integer roleId, String role, User userRequest) {
-		super();
-		this.roleId = roleId;
-		this.role = role;
-		this.user = userRequest;
-	}
-
-	public Integer getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-	public User getUserRequest() {
-		return user;
-	}
-
-	public void setUserRequest(User user) {
-		this.user = user;
+	public String[] getAuthorities() {
+		return authorities;
 	}
 
 }

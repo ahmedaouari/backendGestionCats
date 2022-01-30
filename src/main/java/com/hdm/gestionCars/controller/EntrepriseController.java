@@ -12,8 +12,6 @@ import com.hdm.gestionCars.model.Entreprise;
 import com.hdm.gestionCars.service.ServiceEntreprise;
 
 @RestController
-@CrossOrigin
-@RequestMapping(path = { "/api" })
 public class EntrepriseController {
 
 	@Autowired
@@ -23,5 +21,6 @@ public class EntrepriseController {
 	public List<Entreprise> getListEntreprises() {
 		return service.listOfAllEntreprises();
 	}
+	
 
 }

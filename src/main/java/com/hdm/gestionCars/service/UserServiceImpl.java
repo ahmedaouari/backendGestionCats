@@ -1,36 +1,54 @@
 package com.hdm.gestionCars.service;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.hdm.gestionCars.DAO.AuthorityRepository;
 import com.hdm.gestionCars.DAO.RepositoryEntreprise;
 import com.hdm.gestionCars.DAO.RepositoryUser;
 import com.hdm.gestionCars.model.Entreprise;
 import com.hdm.gestionCars.model.User;
-import com.hdm.gestionCars.model.components.Authority;
+import com.hdm.gestionCars.model.UserPrincipal;
+import com.hdm.gestionCars.model.components.Role;
 
 @Service
-public class ServiceUser {
-
-	@Autowired
-	private RepositoryUser repositoryUser;
-
-	@Autowired
+@Transactional
+@Qualifier(value = "UserDetailsService")
+public class UserServiceImpl implements UserDetailsService {
+	private RepositoryUser user_Repository;
 	private RepositoryEntreprise entreprise;
-
-	@Autowired
-	private AuthorityRepository authorityRepository;
-
-	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	@Autowired
+	private RepositoryEntreprise entrepriseRepo;
+
+	@Autowired
+	public UserServiceImpl(RepositoryUser user_Repository, RepositoryEntreprise entreprise,
+			BCryptPasswordEncoder bCryptPasswordEncoder) {
+		this.user_Repository = user_Repository;
+		this.entreprise = entreprise;
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		User user = user_Repository.findUserByUsername(username);
+		if (user == null) {
+			throw new UsernameNotFoundException("no user found based on the given username : " + username);
+		} else {
+			user_Repository.save(user);
+			UserPrincipal principal = new UserPrincipal(user);
+			return principal;
+		}
+	}
 
 	public User signUpUser(User user) {
 		User user_ = new User();
@@ -43,7 +61,8 @@ public class ServiceUser {
 		user_.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user_.setActive(false);
 		user_.setFonction(user.getFonction());
-
+		user_.setRole(Role.ROLE_USER.name());
+		user_.setAuthorities(Role.ROLE_USER.getAuthorities());
 		Entreprise entreprise = new Entreprise(user.getEntreprise().getEntrepriseName(),
 				user.getEntreprise().getAddresse(), user.getEntreprise().getCodePostal(),
 				user.getEntreprise().getVille(), user.getEntreprise().getPays(), user.getEntreprise().getTva(),
@@ -51,8 +70,11 @@ public class ServiceUser {
 				user.getEntreprise().getGroupeClients(), user.getEntreprise().getRegistrecommerce(),
 				user.getEntreprise().getEnregistrementEntreprise(), user.getEntreprise().getCopiePieceDidentiter());
 
+		// Entreprise save = entrepriseRepo.save(entreprise);
+
+//		user_.setEntreprise(save);
 		user_.setEntreprise(entreprise);
-		return repositoryUser.save(user_);
+		return user_Repository.saveAndFlush(user_);
 	}
 
 	public User addUpUser(User user) {
@@ -62,6 +84,8 @@ public class ServiceUser {
 		user_.setPhone(user.getPhone());
 		user_.setEmail(user.getEmail());
 		user_.setUsername(user.getUsername());
+		user_.setRole(Role.ROLE_USER.name());
+		user_.setAuthorities(Role.ROLE_USER.getAuthorities());
 //		user_.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user_.setPassword(user.getPassword());
 		user_.setActive(true);
@@ -72,62 +96,49 @@ public class ServiceUser {
 		if (findByEntrepriseId != null) {
 			user_.setEntreprise(findByEntrepriseId);
 		}
-		return repositoryUser.saveAndFlush(user_);
+		return user_Repository.saveAndFlush(user_);
 	}
 
 	public List<User> getListUsers() {
-		return repositoryUser.findAll();
+		return user_Repository.findAll();
 	}
 
 	public User activateUser(Long userId) {
-		User user = repositoryUser.findByUserId(userId);
+		User user = user_Repository.findByUserId(userId);
 		if (user != null) {
-			user.setActive(true);
-			repositoryUser.save(user);
+			if (user.isActive()) {
+				user.setActive(false);
+			} else {
+				user.setActive(true);
+			}
+			user_Repository.save(user);
 		}
 		return user;
 	}
 
 	public User getOneUser(Long userId) {
-		return repositoryUser.findByUserId(userId);
+		return user_Repository.findByUserId(userId);
 	}
 
 	public User updateUser(Long userId, User user) {
 		User save = null;
-		User userToBeUpdated = repositoryUser.findByUserId(userId);
+		User userToBeUpdated = user_Repository.findByUserId(userId);
 
 		if (userToBeUpdated != null) {
 			// update fields here
 			userToBeUpdated.setEmail(user.getEmail());
-			save = repositoryUser.save(userToBeUpdated);
+			save = user_Repository.save(userToBeUpdated);
 		}
 		return save;
 	}
 
 	public String eraseUserFromTheSystem(Long userId) {
-		repositoryUser.deleteById(userId);
+		user_Repository.deleteById(userId);
 		return "user with the given id -> " + userId + "deleted successfully";
 	}
 
 	public User getUserByUsername(String username) {
-		User user_ = repositoryUser.findByUsername(username);
-
-		if (user_ != null) {
-			User user = new User(user_.getUserId(), user_.getUsername(), user_.getPassword(), user_.isActive());
-
-			Stream<Stream<String>> streams = user_.getRoles().stream().map(role -> {
-				Set<Authority> authorities = authorityRepository.findByRole(role.getRole());
-				return authorities.stream().map(authority -> authority.getAuthority());
-			});
-			Set<String> collect = streams.flatMap(authorityStream -> authorityStream).collect(Collectors.toSet());
-
-			user.getRoles().stream().forEach(role_ -> collect.add(role_.getRole()));
-			user.setAuthorities(collect.stream().map(authority_ -> new SimpleGrantedAuthority(authority_))
-					.collect(Collectors.toSet()));
-			return user;
-		} else {
-			return null;
-		}
+		return user_Repository.findUserByUsername(username);
 	}
 
 }

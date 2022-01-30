@@ -1,11 +1,6 @@
 package com.hdm.gestionCars.model;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,18 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hdm.gestionCars.model.components.Authority;
-import com.hdm.gestionCars.model.components.Role;
 
 @Entity
-public class User implements UserDetails {
-	private static final long serialVersionUID = -9099196981215771794L;
+public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,16 +24,12 @@ public class User implements UserDetails {
 	private String password;
 	private String fonction;
 	private boolean active;
+	private String role;
+	private String[] authorities;
 
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "entreprise_key", nullable = false)
 	private Entreprise entreprise;
-
-	@OneToMany(mappedBy = "user", cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	private Set<Role> roles = new HashSet<Role>();
-
-	@ElementCollection(targetClass = Authority.class)
-	public Set<GrantedAuthority> authorities;
 
 	public User() {
 		super();
@@ -176,40 +158,19 @@ public class User implements UserDetails {
 		this.entreprise = entreprise;
 	}
 
-	public Set<Role> getRoles() {
-		return roles;
+	public String getRole() {
+		return role;
 	}
 
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
+	public String[] getAuthorities() {
 		return authorities;
 	}
 
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return isActive();
-	}
-
-	public void setAuthorities(Set<GrantedAuthority> authorities) {
+	public void setAuthorities(String[] authorities) {
 		this.authorities = authorities;
 	}
 
