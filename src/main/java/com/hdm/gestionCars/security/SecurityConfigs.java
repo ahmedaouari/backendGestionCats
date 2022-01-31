@@ -18,10 +18,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfigs extends WebSecurityConfigurerAdapter {
 
-	public static final String[] PUBLIC_URLS = { "/singin", "/singup"};
+	public static final String[] PUBLIC_URLS = { "**/singin", "**/singup"};
 
 	private JWTAccessDeniedHandler jwtAccessDeniedHandler;
 	private JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -53,8 +53,11 @@ public class SecurityConfigs extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().cors().and().sessionManagement().sessionCreationPolicy(STATELESS).and()
-				.authorizeRequests().antMatchers(PUBLIC_URLS).permitAll().anyRequest().authenticated().and()
+		
+	//	http.authorizeRequests().antMatchers("/**").permitAll().anyRequest();
+    
+	http.csrf().disable().cors().and().sessionManagement().sessionCreationPolicy(STATELESS).and()
+				.authorizeRequests().antMatchers("/**").permitAll().anyRequest().authenticated().and()
 				.exceptionHandling().accessDeniedHandler(jwtAccessDeniedHandler)
 				.authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
 				.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
