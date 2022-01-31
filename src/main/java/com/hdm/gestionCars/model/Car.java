@@ -6,26 +6,28 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.ManyToAny;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Car implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 9157796402958090481L;
+public class Car {
+
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer carId;
 
 	private String model;
@@ -58,60 +60,95 @@ public class Car implements Serializable {
 	private String coutsSupplementaires;
 	private String ramasse;
 
-	@OneToOne(cascade = CascadeType.REMOVE)
-	@JoinColumn(name = "fabricant_key")
-	@JsonIgnore
+
+
+	  @ManyToOne
+	  @JoinColumn(name = "fabricant")
 	private Fabricant fabricant;
 
-	@OneToOne(cascade = CascadeType.REMOVE)
-	@JoinColumn(name = "couleurExterieur_key")
-	@JsonIgnore
+
+	 @ManyToOne
+	  @JoinColumn(name = "couleurExterieur")
 	private CouleurExterieur couleurExterieur;
 
-	@OneToOne(cascade = CascadeType.REMOVE)
-	@JoinColumn(name = "couleurInterieur_key")
-	@JsonIgnore
+	
+	 @ManyToOne
+	  @JoinColumn(name = "couleurInterieur")
 	private CouleurInterieur couleurInterieur;
 
-	@OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
-	@JsonIgnore
+	/*@ManyToMany(cascade = CascadeType.PERSIST)
+	@JsonIgnore*/
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "carAttelageRemorque",
+            joinColumns = {@JoinColumn(name = "car")},
+            inverseJoinColumns = {@JoinColumn(name = "AttelageRemorque")
+    })
 	private Set<AttelageRemorque> attelageRemorques = new HashSet<>();
 
-	@OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
-	@JsonIgnore
+	  @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "carAideStationnements",
+            joinColumns = {@JoinColumn(name = "car")},
+            inverseJoinColumns = {@JoinColumn(name = "aideStationnements")
+    })
 	private Set<AideStationnement> AideStationnements = new HashSet<>();
 
-	@OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
-	@JsonIgnore
+	  @ManyToMany(fetch = FetchType.EAGER)
+	    @JoinTable(name = "carRegulateurVitesse",
+	            joinColumns = {@JoinColumn(name = "car")},
+	            inverseJoinColumns = {@JoinColumn(name = "regulateurVitesse")
+	    })
 	private Set<RegulateurVitesse> regulateurVitesse = new HashSet<>();
 
-	@OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
-	@JsonIgnore
+	
+	  @ManyToMany(fetch = FetchType.EAGER)
+	    @JoinTable(name = "carAutresEquipements",
+	            joinColumns = {@JoinColumn(name = "car")},
+	            inverseJoinColumns = {@JoinColumn(name = "autresEquipements")
+	    })
 	private Set<AutresEquipement> autresEquipements = new HashSet<>();
 
-	@OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
-	@JsonIgnore
-	private Set<MateriauIntérieur> materiauIntérieur = new HashSet<>();
+	  @ManyToMany(fetch = FetchType.EAGER)
+	    @JoinTable(name = "carMateriauInterieur",
+	            joinColumns = {@JoinColumn(name = "car")},
+	            inverseJoinColumns = {@JoinColumn(name = "materiauInterieur")
+	    })
+	private Set<MateriauInterieur> materiauInterieur = new HashSet<>();
 
-	@OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
-	@JsonIgnore
+	  @ManyToMany(fetch = FetchType.EAGER)
+	    @JoinTable(name = "carAutres",
+	            joinColumns = {@JoinColumn(name = "car")},
+	            inverseJoinColumns = {@JoinColumn(name = "autres")
+	    })
 	private Set<Autre> autres = new HashSet<>();
 
-	@OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
-	@JsonIgnore
+	  @ManyToMany(fetch = FetchType.EAGER)
+	    @JoinTable(name = "carClimatisations",
+	            joinColumns = {@JoinColumn(name = "car")},
+	            inverseJoinColumns = {@JoinColumn(name = "climatisations")
+	    })
 	private Set<Climatisation> Climatisations = new HashSet<>();
 
-	@OneToMany(mappedBy = "car")
-	@JsonIgnore
+	  @ManyToMany(fetch = FetchType.EAGER)
+	    @JoinTable(name = "carAutresAmenagementsInterieurs",
+	            joinColumns = {@JoinColumn(name = "car")},
+	            inverseJoinColumns = {@JoinColumn(name = "autresAmenagementsInterieurs")
+	    })
 	private Set<AutresAmenagementsInt> autresAmenagementsInterieurs = new HashSet<>();
 
-	@OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
-	@JsonIgnore
+	  @ManyToMany(fetch = FetchType.EAGER)
+	    @JoinTable(name = "carPienceJointes",
+	            joinColumns = {@JoinColumn(name = "car")},
+	            inverseJoinColumns = {@JoinColumn(name = "pienceJointes")
+	    })
 	private Set<PienceJointe> pienceJointes = new HashSet<>();
 
-	@OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
-	@JsonIgnore
-	private Set<Document> documents = new HashSet<>();
+	  @ManyToMany(fetch = FetchType.EAGER)
+	    @JoinTable(name = "carDocuments",
+	            joinColumns = {@JoinColumn(name = "car")},
+	            inverseJoinColumns = {@JoinColumn(name = "documents")
+	    })
+	private Set<DocumentRef> documents = new HashSet<>();
 
 	public Car() {
 	}
@@ -160,9 +197,9 @@ public class Car implements Serializable {
 			String coutsSupplementaires, String ramasse, Fabricant fabricant, CouleurExterieur couleurExterieur,
 			CouleurInterieur couleurInterieur, Set<AttelageRemorque> attelageRemorques,
 			Set<AideStationnement> aideStationnements, Set<RegulateurVitesse> regulateurVitesse,
-			Set<AutresEquipement> autresEquipements, Set<MateriauIntérieur> materiauIntérieur, Set<Autre> autres,
+			Set<AutresEquipement> autresEquipements, Set<MateriauInterieur> materiauIntérieur, Set<Autre> autres,
 			Set<Climatisation> climatisations, Set<AutresAmenagementsInt> autresAmenagementsInterieurs,
-			Set<PienceJointe> pienceJointes, Set<Document> documents) {
+			Set<PienceJointe> pienceJointes, Set<DocumentRef> documents) {
 		super();
 		this.carId = carId;
 		this.model = model;
@@ -197,12 +234,12 @@ public class Car implements Serializable {
 		AideStationnements = aideStationnements;
 		this.regulateurVitesse = regulateurVitesse;
 		this.autresEquipements = autresEquipements;
-		this.materiauIntérieur = materiauIntérieur;
+		this.materiauInterieur = materiauIntérieur;
 		this.autres = autres;
 		Climatisations = climatisations;
 		this.autresAmenagementsInterieurs = autresAmenagementsInterieurs;
 		this.pienceJointes = pienceJointes;
-		this.documents = documents;
+	
 	}
 
 	public Car(String model, String variante, String conception, String ailette, String inscription, String marque,
@@ -212,9 +249,9 @@ public class Car implements Serializable {
 			String coutsSupplementaires, String ramasse, Fabricant fabricant, CouleurExterieur couleurExterieur,
 			CouleurInterieur couleurInterieur, Set<AttelageRemorque> attelageRemorques,
 			Set<AideStationnement> aideStationnements, Set<RegulateurVitesse> regulateurVitesse,
-			Set<AutresEquipement> autresEquipements, Set<MateriauIntérieur> materiauIntérieur, Set<Autre> autres,
+			Set<AutresEquipement> autresEquipements, Set<MateriauInterieur> materiauIntérieur, Set<Autre> autres,
 			Set<Climatisation> climatisations, Set<AutresAmenagementsInt> autresAmenagementsInterieurs,
-			Set<PienceJointe> pienceJointes, Set<Document> documents) {
+			Set<PienceJointe> pienceJointes, Set<DocumentRef> documents) {
 		super();
 		this.model = model;
 		this.variante = variante;
@@ -248,7 +285,7 @@ public class Car implements Serializable {
 		AideStationnements = aideStationnements;
 		this.regulateurVitesse = regulateurVitesse;
 		this.autresEquipements = autresEquipements;
-		this.materiauIntérieur = materiauIntérieur;
+		this.materiauInterieur = materiauIntérieur;
 		this.autres = autres;
 		Climatisations = climatisations;
 		this.autresAmenagementsInterieurs = autresAmenagementsInterieurs;
@@ -520,12 +557,12 @@ public class Car implements Serializable {
 		this.autresEquipements = autresEquipements;
 	}
 
-	public Set<MateriauIntérieur> getMateriauIntérieur() {
-		return materiauIntérieur;
+	public Set<MateriauInterieur> getMateriauIntérieur() {
+		return materiauInterieur;
 	}
 
-	public void setMateriauIntérieur(Set<MateriauIntérieur> materiauIntérieur) {
-		this.materiauIntérieur = materiauIntérieur;
+	public void setMateriauIntérieur(Set<MateriauInterieur> materiauInterieur) {
+		this.materiauInterieur = materiauInterieur;
 	}
 
 	public Set<Autre> getAutres() {
@@ -560,16 +597,42 @@ public class Car implements Serializable {
 		this.pienceJointes = pienceJointes;
 	}
 
-	public Set<Document> getDocuments() {
+
+
+	public Set<DocumentRef> getDocuments() {
 		return documents;
 	}
 
-	public void setDocuments(Set<Document> documents) {
+
+
+	public void setDocuments(Set<DocumentRef> documents) {
 		this.documents = documents;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+
+
+
+
+
+
+	@Override
+	public String toString() {
+		return "Car [carId=" + carId + ", model=" + model + ", variante=" + variante + ", conception=" + conception
+				+ ", ailette=" + ailette + ", inscription=" + inscription + ", marque=" + marque + ", kilometre="
+				+ kilometre + ", puissance=" + puissance + ", capacite=" + capacite + ", carburant=" + carburant
+				+ ", transmission=" + transmission + ", cO2=" + cO2 + ", typePeinture=" + typePeinture + ", nbrPortes="
+				+ nbrPortes + ", nbrplaces=" + nbrplaces + ", nbrCles=" + nbrCles + ", evaluateur=" + evaluateur
+				+ ", prixReserve=" + prixReserve + ", imposition=" + imposition + ", prixVente=" + prixVente
+				+ ", acheteurs=" + acheteurs + ", prixAchat=" + prixAchat + ", vendeur=" + vendeur
+				+ ", coutsSupplementaires=" + coutsSupplementaires + ", ramasse=" + ramasse + ", fabricant=" + fabricant
+				+ ", couleurExterieur=" + couleurExterieur + ", couleurInterieur=" + couleurInterieur
+				+ ", attelageRemorques=" + attelageRemorques + ", AideStationnements=" + AideStationnements
+				+ ", regulateurVitesse=" + regulateurVitesse + ", autresEquipements=" + autresEquipements
+				+ ", materiauIntérieur=" + materiauInterieur + ", autres=" + autres + ", Climatisations="
+				+ Climatisations + ", autresAmenagementsInterieurs=" + autresAmenagementsInterieurs + ", pienceJointes="
+				+ pienceJointes + ", documents=" + documents + "]";
 	}
+	
+	
 
 }

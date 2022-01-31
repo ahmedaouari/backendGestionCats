@@ -18,15 +18,14 @@ public class Fabricant implements Serializable {
 	private static final long serialVersionUID = -8012619173552562831L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long fabricantID;
 
 	private String nameFr;
 	private String nameAlm;
 	private String nameEn;
 
-	@OneToOne(mappedBy = "fabricant", cascade = { CascadeType.ALL })
-	private Car car;
+
 
 	
 	
@@ -34,12 +33,12 @@ public class Fabricant implements Serializable {
 	public Fabricant() {
 	}
 
-	public Fabricant(Long fabricantID, String nameFr, String nameAlm, String nameEn, Car car) {
+	public Fabricant(Long fabricantID, String nameFr, String nameAlm, String nameEn) {
 		this.fabricantID = fabricantID;
 		this.nameFr = nameFr;
 		this.nameAlm = nameAlm;
 		this.nameEn = nameEn;
-		this.car = car;
+
 	}
 
 	public Fabricant(String nameFr, String nameAlm, String nameEn) {
@@ -81,18 +80,12 @@ public class Fabricant implements Serializable {
 		this.nameEn = nameEn;
 	}
 
-	public Car getCar() {
-		return car;
-	}
 
-	public void setCar(Car car) {
-		this.car = car;
-	}
 
 	@Override
 	public String toString() {
 		return "Fabricant [fabricantID=" + fabricantID + ", nameFr=" + nameFr + ", nameAlm=" + nameAlm + ", nameEn="
-				+ nameEn + ", car=" + car + "]";
+				+ nameEn ;
 	}
 
 }

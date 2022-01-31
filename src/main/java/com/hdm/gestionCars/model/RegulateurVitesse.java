@@ -9,26 +9,17 @@ import javax.persistence.ManyToOne;
 @Entity
 public class RegulateurVitesse {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String nameFr;
 	private String nameAlg;
 	private String nameEN;
 	
-	 @ManyToOne
-	  @JoinColumn(name = "car")
-	    private Car car;
+	
 	 
 	 
 	public RegulateurVitesse() {
 		super();
-	}
-	public RegulateurVitesse(String nameFr, String nameAlg, String nameEN, Car car) {
-		super();
-		this.nameFr = nameFr;
-		this.nameAlg = nameAlg;
-		this.nameEN = nameEN;
-		this.car = car;
 	}
 	public RegulateurVitesse(String nameFr, String nameAlg, String nameEN) {
 		super();
@@ -36,12 +27,8 @@ public class RegulateurVitesse {
 		this.nameAlg = nameAlg;
 		this.nameEN = nameEN;
 	}
-	public Car getCar() {
-		return car;
-	}
-	public void setCar(Car car) {
-		this.car = car;
-	}
+	
+
 	public long getId() {
 		return id;
 	}

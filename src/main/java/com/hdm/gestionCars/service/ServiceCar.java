@@ -1,6 +1,7 @@
 package com.hdm.gestionCars.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -24,8 +25,8 @@ public class ServiceCar {
 		return repositoryCar.findAll();
 	}
 
-	public Car findCarById(Integer id) {
-		return repositoryCar.getById(id);
+	public Optional<Car> findCarById(Integer id) {
+		return repositoryCar.findById(id);
 	}
 	@Transactional
 	public  int    deleteBuId(Integer id){

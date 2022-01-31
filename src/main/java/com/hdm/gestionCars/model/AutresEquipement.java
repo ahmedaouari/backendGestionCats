@@ -9,15 +9,46 @@ import javax.persistence.ManyToOne;
 @Entity
 public class AutresEquipement {
 	 @Id
-	    @GeneratedValue(strategy = GenerationType.AUTO)
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long id;
 
 	    private String nameFr;
 	    private String nameAlm;
 	    private String nameEn;
+		public Long getId() {
+			return id;
+		}
+		public void setId(Long id) {
+			this.id = id;
+		}
+		public String getNameFr() {
+			return nameFr;
+		}
+		public void setNameFr(String nameFr) {
+			this.nameFr = nameFr;
+		}
+		public String getNameAlm() {
+			return nameAlm;
+		}
+		public void setNameAlm(String nameAlm) {
+			this.nameAlm = nameAlm;
+		}
+		public String getNameEn() {
+			return nameEn;
+		}
+		public void setNameEn(String nameEn) {
+			this.nameEn = nameEn;
+		}
+		public AutresEquipement(String nameFr, String nameAlm, String nameEn) {
+			super();
+			this.id = id;
+			this.nameFr = nameFr;
+			this.nameAlm = nameAlm;
+			this.nameEn = nameEn;
+		}
+		public AutresEquipement() {
+			super();
+		}
 	    
-	    @ManyToOne
-		  @JoinColumn(name = "car")
-		    private Car car;
-
+	  
 }
