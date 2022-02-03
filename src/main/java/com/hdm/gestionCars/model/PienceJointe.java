@@ -23,6 +23,10 @@ public class PienceJointe {
 		this.type = type;
 	}
 
+	public PienceJointe() {
+		super();
+	}
+
 	public long getIdPienceJointe() {
 		return id;
 	}
