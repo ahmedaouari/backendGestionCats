@@ -12,42 +12,51 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Document {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	private String name;
+	private String nameFr;
+	private String nameAln;
+	private String nameNeg;
 	private Date dateEntre;
 	private Date dateSortie;
 	
-	 @ManyToOne
-	  @JoinColumn(name = "car")
-	    private Car car;
-	 
-	 
-	 
-	public Document(String name, Date dateEntre, Date dateSortie) {
+	
+	
+	public Document() {
 		super();
-		this.name = name;
-		this.dateEntre = dateEntre;
-		this.dateSortie = dateSortie;
 	}
-	public Car getCar() {
-		return car;
+	public Document(String nameFr, String nameAln, String nameNeg) {
+		super();
+		this.nameFr = nameFr;
+		this.nameAln = nameAln;
+		this.nameNeg = nameNeg;
 	}
-	public void setCar(Car car) {
-		this.car = car;
+	public String getNameFr() {
+		return nameFr;
 	}
+	public void setNameFr(String nameFr) {
+		this.nameFr = nameFr;
+	}
+	public String getNameAln() {
+		return nameAln;
+	}
+	public void setNameAln(String nameAln) {
+		this.nameAln = nameAln;
+	}
+	public String getNameNeg() {
+		return nameNeg;
+	}
+	public void setNameNeg(String nameNeg) {
+		this.nameNeg = nameNeg;
+	}
+
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+
 	public Date getDateEntre() {
 		return dateEntre;
 	}

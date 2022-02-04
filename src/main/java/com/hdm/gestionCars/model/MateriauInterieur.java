@@ -8,24 +8,22 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class MateriauIntérieur {
+public class MateriauInterieur {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String nameFr;
 	private String nameAlm;
 	private String nameEn;
 
-	@ManyToOne
-	@JoinColumn(name = "car", nullable = true)
-	private Car car;
 
-	public MateriauIntérieur() {
+
+	public MateriauInterieur() {
 		super();
 	}
 
-	public MateriauIntérieur(String nameFr, String nameAlm, String nameEn) {
+	public MateriauInterieur(String nameFr, String nameAlm, String nameEn) {
 		super();
 		this.nameFr = nameFr;
 		this.nameAlm = nameAlm;
@@ -64,13 +62,7 @@ public class MateriauIntérieur {
 		this.nameEn = nameEn;
 	}
 
-	public Car getCar() {
-		return car;
-	}
-
-	public void setCar(Car car) {
-		this.car = car;
-	}
+	
 
 	
 }

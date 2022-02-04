@@ -9,15 +9,12 @@ import javax.persistence.ManyToOne;
 @Entity
 public class AideStationnement {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 private long id;
 private String nameFr;
 private String nameAlg;
 private String nameEN;
 
-@ManyToOne
-@JoinColumn(name = "car",unique = false, nullable = true)
-  private Car car;
 
 
 public AideStationnement(String nameFr, String nameAlg, String nameEN) {
@@ -27,13 +24,12 @@ public AideStationnement(String nameFr, String nameAlg, String nameEN) {
 	this.nameEN = nameEN;
 }
 
-public AideStationnement(long id, String nameFr, String nameAlg, String nameEN, Car car) {
+public AideStationnement(long id, String nameFr, String nameAlg, String nameEN) {
 	super();
 	this.id = id;
 	this.nameFr = nameFr;
 	this.nameAlg = nameAlg;
 	this.nameEN = nameEN;
-	this.car = car;
 }
 
 
@@ -41,12 +37,7 @@ public AideStationnement() {
 	super();
 }
 
-public Car getCar() {
-	return car;
-}
-public void setCar(Car car) {
-	this.car = car;
-}
+
 public long getIdAideStationnement() {
 	return id;
 }

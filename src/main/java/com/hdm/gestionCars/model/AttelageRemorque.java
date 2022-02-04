@@ -12,7 +12,7 @@ public class AttelageRemorque {
 
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false, insertable = false)
 	private long id;
 	
@@ -20,10 +20,7 @@ public class AttelageRemorque {
 	private String nameAlg;
 	private String nameEN;
 
-	@ManyToOne
-	@JoinColumn(name = "car", nullable = true)
-	private Car car;
-
+	
 	
 	
 	public AttelageRemorque() {
@@ -69,13 +66,7 @@ public class AttelageRemorque {
 		this.nameEN = nameEN;
 	}
 
-	public Car getCar() {
-		return car;
-	}
-
-	public void setCar(Car car) {
-		this.car = car;
-	}
+	
 	 
 
 	 

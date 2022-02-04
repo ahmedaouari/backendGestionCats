@@ -9,14 +9,12 @@ import javax.persistence.ManyToOne;
 @Entity
 public class PienceJointe {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String name;
 	private String path;
 	private String type;
-	 @ManyToOne
-	  @JoinColumn(name = "car")
-	    private Car car;
+	
 	 
 	public PienceJointe(String name, String path, String type) {
 		super();
@@ -24,12 +22,11 @@ public class PienceJointe {
 		this.path = path;
 		this.type = type;
 	}
-	public Car getCar() {
-		return car;
+
+	public PienceJointe() {
+		super();
 	}
-	public void setCar(Car car) {
-		this.car = car;
-	}
+
 	public long getIdPienceJointe() {
 		return id;
 	}

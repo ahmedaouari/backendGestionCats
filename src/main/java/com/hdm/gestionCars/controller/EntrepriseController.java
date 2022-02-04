@@ -12,6 +12,7 @@ import com.hdm.gestionCars.model.Entreprise;
 import com.hdm.gestionCars.service.ServiceEntreprise;
 
 @RestController
+@RequestMapping(path = { "/api" })
 public class EntrepriseController {
 
 	@Autowired

@@ -19,7 +19,7 @@ public class CouleurInterieur implements Serializable {
 	private static final long serialVersionUID = 2461146127163337337L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long interiorId;
 
 	private String nameFr;
