@@ -14,7 +14,7 @@ import org.springframework.security.web.authentication.Http403ForbiddenEntryPoin
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hdm.gestionCars.response.HttpResponse;
+import com.hdm.gestionCars.response.CustomResponseError;
 
 @Component
 public class JWTAuthenticationEntryPoint extends Http403ForbiddenEntryPoint {
@@ -23,8 +23,8 @@ public class JWTAuthenticationEntryPoint extends Http403ForbiddenEntryPoint {
 	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException arg2)
 			throws IOException {
 
-		HttpResponse httpResponse = new HttpResponse(FORBIDDEN.value(), FORBIDDEN,
-				FORBIDDEN.getReasonPhrase().toUpperCase(), "You Need To Log In To Access This Page");
+		CustomResponseError httpResponse = new CustomResponseError(FORBIDDEN.value(),
+				"You Need To Log In To Access This Page");
 		response.setContentType(APPLICATION_JSON_VALUE);
 		response.setStatus(FORBIDDEN.value());
 		OutputStream outputStream = response.getOutputStream();

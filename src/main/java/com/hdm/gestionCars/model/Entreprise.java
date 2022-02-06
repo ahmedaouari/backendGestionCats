@@ -1,9 +1,13 @@
 package com.hdm.gestionCars.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Entreprise {
@@ -26,6 +30,12 @@ public class Entreprise {
 	private String registrecommerce;
 	private String enregistrementEntreprise;
 	private String copiePieceDidentiter;
+
+	@OneToMany(mappedBy = "entreprise")
+	private Set<Activity> activities = new HashSet<>();
+	
+	@OneToMany(mappedBy = "entreprise")
+	private Set<Favorite> favorites = new HashSet<>();
 
 	public Entreprise() {
 		super();
@@ -181,6 +191,14 @@ public class Entreprise {
 
 	public void setCopiePieceDidentiter(String copiePieceDidentiter) {
 		this.copiePieceDidentiter = copiePieceDidentiter;
+	}
+
+	public Set<Activity> getActivities() {
+		return activities;
+	}
+
+	public void setActivities(Set<Activity> activities) {
+		this.activities = activities;
 	}
 
 }

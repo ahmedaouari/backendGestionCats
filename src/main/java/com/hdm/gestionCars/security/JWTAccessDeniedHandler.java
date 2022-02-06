@@ -15,7 +15,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hdm.gestionCars.response.HttpResponse;
+import com.hdm.gestionCars.response.CustomResponseError;
 
 @Component
 public class JWTAccessDeniedHandler implements AccessDeniedHandler {
@@ -23,8 +23,8 @@ public class JWTAccessDeniedHandler implements AccessDeniedHandler {
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
-		HttpResponse httpResponse = new HttpResponse(UNAUTHORIZED.value(), UNAUTHORIZED,
-				UNAUTHORIZED.getReasonPhrase().toUpperCase(), "You Do Not Have Permission To Access This Page");
+		CustomResponseError httpResponse = new CustomResponseError(UNAUTHORIZED.value(),
+				"You Do Not Have Permission To Access This Page");
 		response.setContentType(APPLICATION_JSON_VALUE);
 		response.setStatus(UNAUTHORIZED.value());
 		OutputStream outputStream = response.getOutputStream();

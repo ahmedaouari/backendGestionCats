@@ -6,10 +6,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hdm.gestionCars.model.User;
 import com.hdm.gestionCars.model.UserPrincipal;
+import com.hdm.gestionCars.response.CustomResponseError;
 import com.hdm.gestionCars.security.JWTokenProvider;
 import com.hdm.gestionCars.service.ServiceEntreprise;
 import com.hdm.gestionCars.service.UserServiceImpl;
@@ -42,6 +46,13 @@ public class UserController {
 	public User signUp(@RequestBody User user) {
 		User signUpUser = serviceUser.signUpUser(user);
 		return signUpUser;
+	}
+
+	@ExceptionHandler(DisabledException.class)
+	public ResponseEntity<CustomResponseError> accountDisabledException() {
+		return new ResponseEntity<CustomResponseError>(
+				new CustomResponseError(400, "Account disabled :(. Please contact your administrator!!"),
+				HttpStatus.BAD_REQUEST);
 	}
 
 	@PostMapping(value = "/singin")

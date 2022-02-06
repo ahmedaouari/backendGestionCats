@@ -25,7 +25,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 public class Car {
 
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer carId;
@@ -60,100 +59,84 @@ public class Car {
 	private String coutsSupplementaires;
 	private String ramasse;
 
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "activity_key", nullable = true)
+	private Activity activity;
 
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "favorite_key", nullable = true)
+	private Favorite favorite;
 
-	  @ManyToOne
-	  @JoinColumn(name = "fabricant")
+	@ManyToOne
+	@JoinColumn(name = "fabricant")
 	private Fabricant fabricant;
 
-
-	 @ManyToOne
-	  @JoinColumn(name = "couleurExterieur")
+	@ManyToOne
+	@JoinColumn(name = "couleurExterieur")
 	private CouleurExterieur couleurExterieur;
 
-	
-	 @ManyToOne
-	  @JoinColumn(name = "couleurInterieur")
+	@ManyToOne
+	@JoinColumn(name = "couleurInterieur")
 	private CouleurInterieur couleurInterieur;
 
-	/*@ManyToMany(cascade = CascadeType.PERSIST)
-	@JsonIgnore*/
+	/*
+	 * @ManyToMany(cascade = CascadeType.PERSIST)
+	 * 
+	 * @JsonIgnore
+	 */
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "carAttelageRemorque",
-            joinColumns = {@JoinColumn(name = "car")},
-            inverseJoinColumns = {@JoinColumn(name = "AttelageRemorque")
-    })
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "carAttelageRemorque", joinColumns = { @JoinColumn(name = "car") }, inverseJoinColumns = {
+			@JoinColumn(name = "AttelageRemorque") })
 	private Set<AttelageRemorque> attelageRemorques = new HashSet<>();
 
-	  @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "carAideStationnements",
-            joinColumns = {@JoinColumn(name = "car")},
-            inverseJoinColumns = {@JoinColumn(name = "aideStationnements")
-    })
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "carAideStationnements", joinColumns = { @JoinColumn(name = "car") }, inverseJoinColumns = {
+			@JoinColumn(name = "aideStationnements") })
 	private Set<AideStationnement> AideStationnements = new HashSet<>();
 
-	  @ManyToMany(fetch = FetchType.EAGER)
-	    @JoinTable(name = "carRegulateurVitesse",
-	            joinColumns = {@JoinColumn(name = "car")},
-	            inverseJoinColumns = {@JoinColumn(name = "regulateurVitesse")
-	    })
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "carRegulateurVitesse", joinColumns = { @JoinColumn(name = "car") }, inverseJoinColumns = {
+			@JoinColumn(name = "regulateurVitesse") })
 	private Set<RegulateurVitesse> regulateurVitesse = new HashSet<>();
 
-	
-	  @ManyToMany(fetch = FetchType.EAGER)
-	    @JoinTable(name = "carAutresEquipements",
-	            joinColumns = {@JoinColumn(name = "car")},
-	            inverseJoinColumns = {@JoinColumn(name = "autresEquipements")
-	    })
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "carAutresEquipements", joinColumns = { @JoinColumn(name = "car") }, inverseJoinColumns = {
+			@JoinColumn(name = "autresEquipements") })
 	private Set<AutresEquipement> autresEquipements = new HashSet<>();
 
-	  @ManyToMany(fetch = FetchType.EAGER)
-	    @JoinTable(name = "carMateriauInterieur",
-	            joinColumns = {@JoinColumn(name = "car")},
-	            inverseJoinColumns = {@JoinColumn(name = "materiauInterieur")
-	    })
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "carMateriauInterieur", joinColumns = { @JoinColumn(name = "car") }, inverseJoinColumns = {
+			@JoinColumn(name = "materiauInterieur") })
 	private Set<MateriauInterieur> materiauInterieur = new HashSet<>();
 
-	  @ManyToMany(fetch = FetchType.EAGER)
-	    @JoinTable(name = "carAutres",
-	            joinColumns = {@JoinColumn(name = "car")},
-	            inverseJoinColumns = {@JoinColumn(name = "autres")
-	    })
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "carAutres", joinColumns = { @JoinColumn(name = "car") }, inverseJoinColumns = {
+			@JoinColumn(name = "autres") })
 	private Set<Autre> autres = new HashSet<>();
 
-	  @ManyToMany(fetch = FetchType.EAGER)
-	    @JoinTable(name = "carClimatisations",
-	            joinColumns = {@JoinColumn(name = "car")},
-	            inverseJoinColumns = {@JoinColumn(name = "climatisations")
-	    })
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "carClimatisations", joinColumns = { @JoinColumn(name = "car") }, inverseJoinColumns = {
+			@JoinColumn(name = "climatisations") })
 	private Set<Climatisation> Climatisations = new HashSet<>();
 
-	  @ManyToMany(fetch = FetchType.EAGER)
-	    @JoinTable(name = "carAutresAmenagementsInterieurs",
-	            joinColumns = {@JoinColumn(name = "car")},
-	            inverseJoinColumns = {@JoinColumn(name = "autresAmenagementsInterieurs")
-	    })
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "carAutresAmenagementsInterieurs", joinColumns = {
+			@JoinColumn(name = "car") }, inverseJoinColumns = { @JoinColumn(name = "autresAmenagementsInterieurs") })
 	private Set<AutresAmenagementsInt> autresAmenagementsInterieurs = new HashSet<>();
 
-	  @ManyToMany(fetch = FetchType.EAGER)
-	    @JoinTable(name = "carPienceJointes",
-	            joinColumns = {@JoinColumn(name = "car")},
-	            inverseJoinColumns = {@JoinColumn(name = "pienceJointes")
-	    })
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "carPienceJointes", joinColumns = { @JoinColumn(name = "car") }, inverseJoinColumns = {
+			@JoinColumn(name = "pienceJointes") })
 	private Set<PienceJointe> pienceJointes = new HashSet<>();
 
-	  @ManyToMany(fetch = FetchType.EAGER)
-	    @JoinTable(name = "carDocuments",
-	            joinColumns = {@JoinColumn(name = "car")},
-	            inverseJoinColumns = {@JoinColumn(name = "documents")
-	    })
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "carDocuments", joinColumns = { @JoinColumn(name = "car") }, inverseJoinColumns = {
+			@JoinColumn(name = "documents") })
 	private Set<DocumentRef> documents = new HashSet<>();
 
 	public Car() {
 	}
-	
-	
 
 	public Car(String model, String variante, String conception, String ailette, String inscription, String marque,
 			String kilometre, String puissance, String capacite, String carburant, String transmission, String cO2,
@@ -187,8 +170,6 @@ public class Car {
 		this.coutsSupplementaires = coutsSupplementaires;
 		this.ramasse = ramasse;
 	}
-
-
 
 	public Car(Integer carId, String model, String variante, String conception, String ailette, String inscription,
 			String marque, String kilometre, String puissance, String capacite, String carburant, String transmission,
@@ -239,7 +220,7 @@ public class Car {
 		Climatisations = climatisations;
 		this.autresAmenagementsInterieurs = autresAmenagementsInterieurs;
 		this.pienceJointes = pienceJointes;
-	
+
 	}
 
 	public Car(String model, String variante, String conception, String ailette, String inscription, String marque,
@@ -597,23 +578,13 @@ public class Car {
 		this.pienceJointes = pienceJointes;
 	}
 
-
-
 	public Set<DocumentRef> getDocuments() {
 		return documents;
 	}
 
-
-
 	public void setDocuments(Set<DocumentRef> documents) {
 		this.documents = documents;
 	}
-
-
-
-
-
-
 
 	@Override
 	public String toString() {
@@ -632,7 +603,5 @@ public class Car {
 				+ Climatisations + ", autresAmenagementsInterieurs=" + autresAmenagementsInterieurs + ", pienceJointes="
 				+ pienceJointes + ", documents=" + documents + "]";
 	}
-	
-	
 
 }
