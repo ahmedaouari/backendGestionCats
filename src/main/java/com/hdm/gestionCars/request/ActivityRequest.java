@@ -13,16 +13,7 @@ public class ActivityRequest {
 
 	private Set<Car> cars = new HashSet<Car>();
 
-	private double price;
-	
-	
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
+	private Double price;
 
 	public Entreprise getEntreprise() {
 		return entreprise;
@@ -30,6 +21,14 @@ public class ActivityRequest {
 
 	public void setEntreprise(Entreprise entreprise) {
 		this.entreprise = entreprise;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 
 	public Set<Car> getCars() {
