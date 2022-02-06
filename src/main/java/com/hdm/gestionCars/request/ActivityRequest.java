@@ -9,8 +9,20 @@ import com.hdm.gestionCars.model.Entreprise;
 public class ActivityRequest {
 
 	private Entreprise entreprise;
+	
 
 	private Set<Car> cars = new HashSet<Car>();
+
+	private double price;
+	
+	
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
 
 	public Entreprise getEntreprise() {
 		return entreprise;

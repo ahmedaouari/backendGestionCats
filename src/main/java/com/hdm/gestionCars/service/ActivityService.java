@@ -29,6 +29,7 @@ public class ActivityService {
 		}
 		activity.setStatus(false);
 		activity.setActivityDate(new Date());
+		activity.setPrice(request.getPrice());
 		
 		request.getCars().stream().forEach(car -> {
 			activity.getCars().add(car);
