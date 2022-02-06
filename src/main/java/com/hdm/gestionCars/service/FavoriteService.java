@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hdm.gestionCars.DAO.FavoriteDAO;
-import com.hdm.gestionCars.model.Activity;
 import com.hdm.gestionCars.model.Entreprise;
 import com.hdm.gestionCars.model.Favorite;
-import com.hdm.gestionCars.request.ActivityRequest;
 import com.hdm.gestionCars.request.FavoriteRequest;
 
 @Service
@@ -17,10 +15,10 @@ public class FavoriteService {
 
 	@Autowired
 	private FavoriteDAO favoriteDAO;
-	
+
 	@Autowired
 	private ServiceEntreprise entreprise;
-	
+
 	public Favorite createNewFavorite(FavoriteRequest request) {
 		Favorite favorite = new Favorite();
 
@@ -29,6 +27,9 @@ public class FavoriteService {
 			Entreprise createNewEntreprise = entreprise.createNewEntreprise(_Entreprise);
 			favorite.setEntreprise(createNewEntreprise);
 		}
+		request.getCars().stream().forEach(car -> {
+			favorite.getCars().add(car);
+		});
 		return favoriteDAO.save(favorite);
 	}
 
