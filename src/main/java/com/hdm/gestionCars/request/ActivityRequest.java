@@ -12,12 +12,22 @@ public class ActivityRequest {
 
 	private Set<Car> cars = new HashSet<Car>();
 
+	private Double price;
+
 	public Entreprise getEntreprise() {
 		return entreprise;
 	}
 
 	public void setEntreprise(Entreprise entreprise) {
 		this.entreprise = entreprise;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 
 	public Set<Car> getCars() {

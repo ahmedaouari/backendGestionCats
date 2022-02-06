@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +27,8 @@ public class Activity {
 	@JsonIgnore
 	private Entreprise entreprise;
 
-	private boolean status;
+	@Enumerated
+	private Activity_Type status;
 
 	private Double price;
 
@@ -70,11 +72,11 @@ public class Activity {
 		this.cars = cars;
 	}
 
-	public boolean getStatus() {
+	public Activity_Type getStatus() {
 		return status;
 	}
 
-	public void setStatus(Boolean status) {
+	public void setStatus(Activity_Type status) {
 		this.status = status;
 	}
 
