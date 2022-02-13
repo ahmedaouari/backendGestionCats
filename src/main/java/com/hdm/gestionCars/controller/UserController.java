@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hdm.gestionCars.model.User;
 import com.hdm.gestionCars.model.UserPrincipal;
+import com.hdm.gestionCars.request.UserRequest;
 import com.hdm.gestionCars.response.CustomResponseError;
 import com.hdm.gestionCars.security.JWTokenProvider;
 import com.hdm.gestionCars.service.ServiceEntreprise;
@@ -82,9 +83,9 @@ public class UserController {
 		return oneUser;
 	}
 
-	@GetMapping(value = "/users/activate/{id}")
-	public User activateUser(@PathVariable Long id) {
-		User activateUser = serviceUser.activateUser(id);
+	@PostMapping(value = "/users/activate-user")
+	public User activateUser(@RequestBody UserRequest request) {
+		User activateUser = serviceUser.activateUser(request);
 		return activateUser;
 	}
 

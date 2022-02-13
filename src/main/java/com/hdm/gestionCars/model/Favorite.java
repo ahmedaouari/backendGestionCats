@@ -28,6 +28,7 @@ public class Favorite {
 
 	@OneToMany(mappedBy = "favorite")
 	private Set<Car> cars = new HashSet<Car>();
+	
 
 	public Long getFavoriteId() {
 		return favoriteId;

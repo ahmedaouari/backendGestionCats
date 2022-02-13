@@ -18,6 +18,7 @@ import com.hdm.gestionCars.model.Entreprise;
 import com.hdm.gestionCars.model.User;
 import com.hdm.gestionCars.model.UserPrincipal;
 import com.hdm.gestionCars.model.components.Role;
+import com.hdm.gestionCars.request.UserRequest;
 
 @Service
 @Transactional
@@ -103,8 +104,8 @@ public class UserServiceImpl implements UserDetailsService {
 		return user_Repository.findAll();
 	}
 
-	public User activateUser(Long userId) {
-		User user = user_Repository.findByUserId(userId);
+	public User activateUser(UserRequest request) {
+		User user = user_Repository.findByUserId(request.getUserId());
 		if (user != null) {
 			if (user.isActive()) {
 				user.setActive(false);

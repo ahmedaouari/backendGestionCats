@@ -65,6 +65,8 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 
 		if (first == true) {
+			
+			
 
 			// fabricant
 			repositoryFabricant.save(new Fabricant("opel", "opel", "opel"));
