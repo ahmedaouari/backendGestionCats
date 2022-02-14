@@ -1,8 +1,10 @@
 package com.hdm.gestionCars.controller;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,10 +43,13 @@ import com.hdm.gestionCars.model.Climatisation;
 import com.hdm.gestionCars.model.CouleurExterieur;
 import com.hdm.gestionCars.model.CouleurInterieur;
 import com.hdm.gestionCars.model.Document;
+import com.hdm.gestionCars.model.DocumentRef;
 import com.hdm.gestionCars.model.Fabricant;
 import com.hdm.gestionCars.model.MateriauInterieur;
+import com.hdm.gestionCars.model.PienceJointe;
 import com.hdm.gestionCars.model.RegulateurVitesse;
 import com.hdm.gestionCars.request.CarRequest;
+import com.hdm.gestionCars.request.requestCar;
 import com.hdm.gestionCars.service.IStorageFile;
 import com.hdm.gestionCars.service.ServiceCar;
 @CrossOrigin
@@ -106,12 +111,62 @@ public class ControllerCar {
 	public List<Car> allCars() {
 		return repositoryCar.findAll();
 	}
-
+	@GetMapping(value = "/CarEnStock")
+	public List<Car> findAllCarEnStock() {
+		return repositoryCar.findAllCarEnStock();
+	}
+	Set<DocumentRef> documents = new HashSet<DocumentRef>();
 	@PostMapping(value = "/new-car")
-	public ResponseEntity<Object>  createNewCarInTheSystem(@RequestBody Car car) { 
-		System.out.println(car.toString());
+	public ResponseEntity<Object>  createNewCarInTheSystem(@RequestBody requestCar car) { 
+		for (Document c : car.getDocuments()) {
+			documents.add(new DocumentRef("","",c));
+		}
+		
+		System.out.println(documents.size());
+		
+		Car c =new Car(car.getModel(),
+				car.getVariante(),
+				car.getConception(),
+				car.getAilette(),
+				car.getInscription(), 
+				car.getMarque(),
+				car.getKilometre(), 
+				car.getPuissance(),
+				car.getCapacite(),
+				car.getCarburant(),
+				car.getTransmission(), 
+				car.getcO2(), 
+				car.getTypePeinture(), 
+				car.getNbrPortes(),
+				car.getNbrplaces(),
+				car.getNbrCles(),
+				car.getEvaluateur(),
+				car.getPrixReserve(),
+				car.getImposition(),
+				car.getPrixVente(),
+				car.getAcheteurs(),
+				car.getPrixAchat(),
+				car.getVendeur(),
+				car.getCoutsSupplementaires(),
+				car.getRamasse(),
+				car.getFabricant(),
+				car.getCouleurExterieur(),
+				car.getCouleurInterieur(),
+				car.getAideStationnements(),
+				car.getAttelageRemorques(),
+				car.getAideStationnements(),
+				car.getRegulateurVitesse(),
+				car.getAutresEquipements(),
+				car.getMateriauIntérieur(),
+				car.getAutres(),
+				car.getClimatisations(),
+				car.getAutresAmenagementsInterieurs(),
+				car.getPienceJointes()
+				);
+		c.setDocuments(documents);
+		
 		   try{
-			   repositoryCar.save(car);
+			  repositoryCar.save(c);
 	            return new ResponseEntity<>(car, HttpStatus.OK);
 	        } catch (DataAccessException e) {
 	            System.out.println("Exception in new car controller : "+e);

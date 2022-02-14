@@ -13,8 +13,8 @@ import org.springframework.web.filter.CorsFilter;
 
 @SpringBootApplication
 public class GestionCarsApplication {
-
-	public static void main(String[] args) {
+	
+		public static void main(String[] args) {
 		SpringApplication.run(GestionCarsApplication.class, args);
 
 	}

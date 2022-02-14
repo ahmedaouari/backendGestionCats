@@ -19,6 +19,7 @@ import com.hdm.gestionCars.DAO.RepositoryDocument;
 import com.hdm.gestionCars.DAO.RepositoryFabricant;
 import com.hdm.gestionCars.DAO.RepositoryMatriaulInterieur;
 import com.hdm.gestionCars.DAO.RepositoryRegulateurVitesse;
+import com.hdm.gestionCars.DAO.RepositoryUser;
 import com.hdm.gestionCars.model.AideStationnement;
 import com.hdm.gestionCars.model.AttelageRemorque;
 import com.hdm.gestionCars.model.Autre;
@@ -31,6 +32,8 @@ import com.hdm.gestionCars.model.Document;
 import com.hdm.gestionCars.model.Fabricant;
 import com.hdm.gestionCars.model.MateriauInterieur;
 import com.hdm.gestionCars.model.RegulateurVitesse;
+import com.hdm.gestionCars.model.User;
+import com.hdm.gestionCars.model.components.Role;
 
 @Component
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -59,11 +62,14 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	 RepositoruAutre repositoruAutre;
 	 @Autowired
 	 RepositoryDocument repositoryDocument;
-	boolean first=false;
+	 @Autowired
+	 RepositoryUser repositoryUser;
+	boolean first=true;
 	@Override
 	@Transactional
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-
+	//	repositoryUser.save(new User("admin", "admin", "admin@gmail.com", "admin", "admin2022", true,"ROLE_SUPER_ADMIN"));
+		 
 		if (first == true) {
 
 			// fabricant

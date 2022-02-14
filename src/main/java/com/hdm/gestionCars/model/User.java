@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.hdm.gestionCars.model.components.Role;
+
 @Entity
 public class User {
 
@@ -41,6 +43,20 @@ public class User {
 		this.username = username;
 		this.password = password;
 		this.active = active;
+	}
+
+	
+	
+	public User(String firstname, String lastname, String email, String username, String password, boolean active,
+			String role) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.email = email;
+		this.username = username;
+		this.password = password;
+		this.active = active;
+		this.role = role;
 	}
 
 	public User(Long userId, String firstname, String lastname, String phone, String email, String username,
