@@ -71,6 +71,8 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	//	repositoryUser.save(new User("admin", "admin", "admin@gmail.com", "admin", "admin2022", true,"ROLE_SUPER_ADMIN"));
 		 
 		if (first == true) {
+			
+			
 
 			// fabricant
 			repositoryFabricant.save(new Fabricant("opel", "opel", "opel"));
