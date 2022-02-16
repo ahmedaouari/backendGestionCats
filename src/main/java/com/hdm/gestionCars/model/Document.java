@@ -17,8 +17,6 @@ public class Document {
 	private String nameFr;
 	private String nameAln;
 	private String nameNeg;
-	private Date dateEntre;
-	private Date dateSortie;
 	
 	
 	
@@ -57,18 +55,7 @@ public class Document {
 		this.id = id;
 	}
 
-	public Date getDateEntre() {
-		return dateEntre;
-	}
-	public void setDateEntre(Date dateEntre) {
-		this.dateEntre = dateEntre;
-	}
-	public Date getDateSortie() {
-		return dateSortie;
-	}
-	public void setDateSortie(Date dateSortie) {
-		this.dateSortie = dateSortie;
-	}
+
 	
 	
 	

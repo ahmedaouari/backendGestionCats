@@ -24,7 +24,10 @@ public class ServiceCar {
 	public List<Car> findAll() {
 		return repositoryCar.findAll();
 	}
-
+	public List<Car> findAllCarEnStock() {
+		return repositoryCar.findAllCarEnStock();
+	}
+	@Transactional
 	public Optional<Car> findCarById(Integer id) {
 		return repositoryCar.findById(id);
 	}

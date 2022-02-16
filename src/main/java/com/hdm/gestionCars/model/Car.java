@@ -28,7 +28,7 @@ public class Car {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer carId;
-
+    private  boolean statut ;
 	private String model;
 	private String variante;
 	private String conception;
@@ -78,13 +78,7 @@ public class Car {
 	@ManyToOne
 	@JoinColumn(name = "couleurInterieur")
 	private CouleurInterieur couleurInterieur;
-
-	/*
-	 * @ManyToMany(cascade = CascadeType.PERSIST)
-	 * 
-	 * @JsonIgnore
-	 */
-
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "carAttelageRemorque", joinColumns = { @JoinColumn(name = "car") }, inverseJoinColumns = {
 			@JoinColumn(name = "AttelageRemorque") })
@@ -130,12 +124,23 @@ public class Car {
 			@JoinColumn(name = "pienceJointes") })
 	private Set<PienceJointe> pienceJointes = new HashSet<>();
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "carDocuments", joinColumns = { @JoinColumn(name = "car") }, inverseJoinColumns = {
-			@JoinColumn(name = "documents") })
-	private Set<DocumentRef> documents = new HashSet<>();
+	
+	
+	@OneToMany(mappedBy = "car" ,
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("car")
+    private Set<DocumentRef> documents=new HashSet<>();
 
 	public Car() {
+	}
+      
+	public boolean isStatut() {
+		return statut;
+	}
+
+	public void setStatut(boolean statut) {
+		this.statut = statut;
 	}
 
 	public Car(String model, String variante, String conception, String ailette, String inscription, String marque,
@@ -169,6 +174,7 @@ public class Car {
 		this.vendeur = vendeur;
 		this.coutsSupplementaires = coutsSupplementaires;
 		this.ramasse = ramasse;
+		
 	}
 
 	public Car(Integer carId, String model, String variante, String conception, String ailette, String inscription,
@@ -220,7 +226,7 @@ public class Car {
 		Climatisations = climatisations;
 		this.autresAmenagementsInterieurs = autresAmenagementsInterieurs;
 		this.pienceJointes = pienceJointes;
-
+       this.documents=documents;
 	}
 
 	public Car(String model, String variante, String conception, String ailette, String inscription, String marque,
@@ -232,7 +238,7 @@ public class Car {
 			Set<AideStationnement> aideStationnements, Set<RegulateurVitesse> regulateurVitesse,
 			Set<AutresEquipement> autresEquipements, Set<MateriauInterieur> materiauIntérieur, Set<Autre> autres,
 			Set<Climatisation> climatisations, Set<AutresAmenagementsInt> autresAmenagementsInterieurs,
-			Set<PienceJointe> pienceJointes, Set<DocumentRef> documents) {
+			Set<PienceJointe> pienceJointes) {
 		super();
 		this.model = model;
 		this.variante = variante;
@@ -271,7 +277,61 @@ public class Car {
 		Climatisations = climatisations;
 		this.autresAmenagementsInterieurs = autresAmenagementsInterieurs;
 		this.pienceJointes = pienceJointes;
-		this.documents = documents;
+		this.statut=true;
+	}
+
+	
+
+	public Car(String model2, String variante2, String conception2, String ailette2, String inscription2,
+			String marque2, String kilometre2, String puissance2, String capacite2, String carburant2,
+			String transmission2, String getcO2, String typePeinture2, int nbrPortes2, int nbrplaces2, int nbrCles2,
+			String evaluateur2, String prixReserve2, String imposition2, String prixVente2, String acheteurs2,
+			String prixAchat2, String vendeur2, String coutsSupplementaires2, String ramasse2, Fabricant fabricant2,
+			CouleurExterieur couleurExterieur2, CouleurInterieur couleurInterieur2,
+			Set<AideStationnement> aideStationnements2, Set<AttelageRemorque> attelageRemorques2,
+			Set<AideStationnement> aideStationnements3, Set<RegulateurVitesse> regulateurVitesse2,
+			Set<AutresEquipement> autresEquipements2, Set<MateriauInterieur> materiauIntérieur, Set<Autre> autres2,
+			Set<Climatisation> climatisations2, Set<AutresAmenagementsInt> autresAmenagementsInterieurs2,
+			Set<PienceJointe> pienceJointes2) {
+		this.model = model2;
+		this.variante = variante2;
+		this.conception = conception2;
+		this.ailette = ailette2;
+		this.inscription = inscription2;
+		this.marque = marque2;
+		this.kilometre = kilometre2;
+		this.puissance = puissance2;
+		this.capacite = capacite2;
+		this.carburant = carburant2;
+		this.transmission = transmission2;
+		this.cO2 = cO2;
+		this.typePeinture = typePeinture2;
+		this.nbrPortes = nbrPortes2;
+		this.nbrplaces = nbrplaces2;
+		this.nbrCles = nbrCles2;
+		this.evaluateur = evaluateur2;
+		this.prixReserve = prixReserve2;
+		this.imposition = imposition2;
+		this.prixVente = prixVente2;
+		this.acheteurs = acheteurs2;
+		this.prixAchat = prixAchat2;
+		this.vendeur = vendeur2;
+		this.coutsSupplementaires = coutsSupplementaires2;
+		this.ramasse = ramasse2;
+		this.fabricant = fabricant2;
+		this.couleurExterieur = couleurExterieur2;
+		this.couleurInterieur = couleurInterieur2;
+		this.attelageRemorques = attelageRemorques2;
+		AideStationnements = aideStationnements2;
+		this.regulateurVitesse = regulateurVitesse2;
+		this.autresEquipements = autresEquipements2;
+		this.materiauInterieur = materiauIntérieur;
+		this.autres = autres2;
+		Climatisations = climatisations2;
+		this.autresAmenagementsInterieurs = autresAmenagementsInterieurs2;
+		this.pienceJointes = pienceJointes2;
+		this.statut=true;
+		
 	}
 
 	public Integer getCarId() {
@@ -578,12 +638,44 @@ public class Car {
 		this.pienceJointes = pienceJointes;
 	}
 
+	
+	
+	
+
+	public Activity getActivity() {
+		return activity;
+	}
+
+	public void setActivity(Activity activity) {
+		this.activity = activity;
+	}
+
+	public Favorite getFavorite() {
+		return favorite;
+	}
+
+	public void setFavorite(Favorite favorite) {
+		this.favorite = favorite;
+	}
+
+	public Set<MateriauInterieur> getMateriauInterieur() {
+		return materiauInterieur;
+	}
+
+	public void setMateriauInterieur(Set<MateriauInterieur> materiauInterieur) {
+		this.materiauInterieur = materiauInterieur;
+	}
+
 	public Set<DocumentRef> getDocuments() {
 		return documents;
 	}
 
 	public void setDocuments(Set<DocumentRef> documents) {
 		this.documents = documents;
+	//&	this.documents = documents;
+       for(DocumentRef d: documents){
+            d.setCar(this);
+        }
 	}
 
 	@Override

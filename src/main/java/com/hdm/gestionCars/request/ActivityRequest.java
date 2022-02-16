@@ -9,6 +9,7 @@ import com.hdm.gestionCars.model.Entreprise;
 public class ActivityRequest {
 
 	private Entreprise entreprise;
+	
 
 	private Set<Car> cars = new HashSet<Car>();
 
