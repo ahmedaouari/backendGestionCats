@@ -27,8 +27,8 @@ public class User {
 	private String role;
 	private String[] authorities;
 
-	@ManyToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	@JoinColumn(name = "entreprise_key", nullable = false)
+	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE }, fetch = FetchType.EAGER)
+	@JoinColumn(name = "entreprise_key", nullable = true)
 	private Entreprise entreprise;
 
 	public User() {
