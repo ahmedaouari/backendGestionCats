@@ -35,6 +35,7 @@ public class Activity {
 	private Date activityDate;
 
 	@OneToMany(mappedBy = "activity")
+	@JsonIgnore
 	private Set<Car> cars = new HashSet<Car>();
 
 	public Activity() {
