@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 @Configuration
 @EnableWebSecurity
@@ -56,13 +57,14 @@ public class SecurityConfigs extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		// http.authorizeRequests().antMatchers("/**").permitAll().anyRequest();
+		//http.authorizeRequests().antMatchers("/**").permitAll().anyRequest();
 
 		http.csrf().disable().cors().and().sessionManagement().sessionCreationPolicy(STATELESS).and()
-				.authorizeRequests().antMatchers("/**").permitAll().anyRequest().authenticated().and()
+				.authorizeRequests().antMatchers(PUBLIC_URLS).permitAll().anyRequest().authenticated().and()
 				.exceptionHandling().accessDeniedHandler(jwtAccessDeniedHandler)
 				.authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
-				.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
+				.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class); 
 	}
+	
 
 }

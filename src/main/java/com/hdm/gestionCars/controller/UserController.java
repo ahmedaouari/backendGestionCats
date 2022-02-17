@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,7 @@ import com.hdm.gestionCars.response.CustomResponseError;
 import com.hdm.gestionCars.security.JWTokenProvider;
 import com.hdm.gestionCars.service.ServiceEntreprise;
 import com.hdm.gestionCars.service.UserServiceImpl;
-
+@CrossOrigin
 @RestController
 @RequestMapping(path = { "/api" })
 public class UserController {

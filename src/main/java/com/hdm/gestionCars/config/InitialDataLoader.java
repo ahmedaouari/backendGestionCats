@@ -64,7 +64,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	 RepositoryDocument repositoryDocument;
 	 @Autowired
 	 RepositoryUser repositoryUser;
-	boolean first=true;
+	boolean first=false;
 	@Override
 	@Transactional
 	public void onApplicationEvent(ContextRefreshedEvent event) {
