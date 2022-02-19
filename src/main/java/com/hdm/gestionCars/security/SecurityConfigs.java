@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -23,7 +22,7 @@ public class SecurityConfigs extends WebSecurityConfigurerAdapter {
 
 	public static final String[] PUBLIC_URLS = { "/api/singin", "/api/singup", "/api/new-activity",
 			"/api/list-activities", "/api/list-activitiesByEntreprise", "/api/list-favoritesByEntreprise",
-			"/api/list-favorites", "/api/users/activate-user" };
+			"/api/list-favorites", "/api/users/activate-user", "/api/change/activity" };
 
 	private JWTAccessDeniedHandler jwtAccessDeniedHandler;
 	private JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -55,7 +54,7 @@ public class SecurityConfigs extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
+
 		http.csrf().disable().cors().and().sessionManagement().sessionCreationPolicy(STATELESS).and()
 				.authorizeRequests().antMatchers(PUBLIC_URLS).permitAll().anyRequest().authenticated().and()
 				.exceptionHandling().accessDeniedHandler(jwtAccessDeniedHandler)

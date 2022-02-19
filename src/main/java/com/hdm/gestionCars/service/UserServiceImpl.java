@@ -71,10 +71,10 @@ public class UserServiceImpl implements UserDetailsService {
 				user.getEntreprise().getGroupeClients(), user.getEntreprise().getRegistrecommerce(),
 				user.getEntreprise().getEnregistrementEntreprise(), user.getEntreprise().getCopiePieceDidentiter());
 
-		// Entreprise save = entrepriseRepo.save(entreprise);
+		 Entreprise save = entrepriseRepo.save(entreprise);
 
-//		user_.setEntreprise(save);
-		user_.setEntreprise(entreprise);
+		user_.setEntreprise(save);
+//		user_.setEntreprise(entreprise);
 		return user_Repository.saveAndFlush(user_);
 	}
 

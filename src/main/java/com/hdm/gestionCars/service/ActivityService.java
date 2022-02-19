@@ -31,7 +31,7 @@ public class ActivityService {
 		activity.setStatus(Activity_Type.EN_COURS);
 		activity.setActivityDate(new Date());
 		activity.setPrice(request.getPrice());
-		
+
 		request.getCars().stream().forEach(car -> {
 			activity.getCars().add(car);
 		});
@@ -50,6 +50,18 @@ public class ActivityService {
 			findByEntreprise = activityDAO.findByEntreprise(_Entreprise);
 		}
 		return findByEntreprise;
+	}
+
+	public Activity changeStatus(ActivityRequest req) {
+		Activity findByActivityId = getTargetedActivityById(req.getActivityId());
+		if (findByActivityId != null) {
+			findByActivityId.setStatus(Activity_Type.valueOf(req.getStatus()));
+		}
+		return activityDAO.saveAndFlush(findByActivityId);
+	}
+
+	public Activity getTargetedActivityById(Long activityId) {
+		return activityDAO.findByActivityId(activityId);
 	}
 
 }

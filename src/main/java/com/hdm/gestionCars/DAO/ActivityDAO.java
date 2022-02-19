@@ -10,5 +10,6 @@ import com.hdm.gestionCars.model.Entreprise;
 public interface ActivityDAO extends JpaRepository<Activity, Long> {
 
 	List<Activity> findByEntreprise(Entreprise entreprise);
+	Activity findByActivityId(Long activityId);
 
 }

@@ -7,13 +7,19 @@ import com.hdm.gestionCars.model.Car;
 import com.hdm.gestionCars.model.Entreprise;
 
 public class ActivityRequest {
-
+	private Long activityId;
 	private Entreprise entreprise;
-	
-
 	private Set<Car> cars = new HashSet<Car>();
-
 	private Double price;
+	private String status;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public Entreprise getEntreprise() {
 		return entreprise;
@@ -37,6 +43,14 @@ public class ActivityRequest {
 
 	public void setCars(Set<Car> cars) {
 		this.cars = cars;
+	}
+
+	public Long getActivityId() {
+		return activityId;
+	}
+
+	public void setActivityId(Long activityId) {
+		this.activityId = activityId;
 	}
 
 }

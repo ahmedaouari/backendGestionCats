@@ -14,17 +14,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Activity {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long activityId;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "entreprise_key")
-	@JsonIgnore
+	@JsonBackReference
 	private Entreprise entreprise;
 
 	@Enumerated
