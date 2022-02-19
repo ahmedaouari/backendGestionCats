@@ -1,6 +1,5 @@
 package com.hdm.gestionCars.model;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,11 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
-import org.hibernate.annotations.ManyToAny;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -28,7 +23,7 @@ public class Car {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer carId;
-    private  boolean statut ;
+	private boolean statut;
 	private String model;
 	private String variante;
 	private String conception;
@@ -68,7 +63,7 @@ public class Car {
 	private Favorite favorite;
 
 	@ManyToOne
-	@JoinColumn(name = "fabricant")
+	@JoinColumn(name = "fabricant", nullable = true)
 	private Fabricant fabricant;
 
 	@ManyToOne
@@ -78,7 +73,7 @@ public class Car {
 	@ManyToOne
 	@JoinColumn(name = "couleurInterieur")
 	private CouleurInterieur couleurInterieur;
-	
+
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "carAttelageRemorque", joinColumns = { @JoinColumn(name = "car") }, inverseJoinColumns = {
 			@JoinColumn(name = "AttelageRemorque") })
@@ -124,17 +119,13 @@ public class Car {
 			@JoinColumn(name = "pienceJointes") })
 	private Set<PienceJointe> pienceJointes = new HashSet<>();
 
-	
-	
-	@OneToMany(mappedBy = "car" ,
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("car")
-    private Set<DocumentRef> documents=new HashSet<>();
+	@OneToMany(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JsonIgnoreProperties("car")
+	private Set<DocumentRef> documents = new HashSet<>();
 
 	public Car() {
 	}
-      
+
 	public boolean isStatut() {
 		return statut;
 	}
@@ -174,7 +165,7 @@ public class Car {
 		this.vendeur = vendeur;
 		this.coutsSupplementaires = coutsSupplementaires;
 		this.ramasse = ramasse;
-		
+
 	}
 
 	public Car(Integer carId, String model, String variante, String conception, String ailette, String inscription,
@@ -226,7 +217,7 @@ public class Car {
 		Climatisations = climatisations;
 		this.autresAmenagementsInterieurs = autresAmenagementsInterieurs;
 		this.pienceJointes = pienceJointes;
-       this.documents=documents;
+		this.documents = documents;
 	}
 
 	public Car(String model, String variante, String conception, String ailette, String inscription, String marque,
@@ -277,10 +268,8 @@ public class Car {
 		Climatisations = climatisations;
 		this.autresAmenagementsInterieurs = autresAmenagementsInterieurs;
 		this.pienceJointes = pienceJointes;
-		this.statut=true;
+		this.statut = true;
 	}
-
-	
 
 	public Car(String model2, String variante2, String conception2, String ailette2, String inscription2,
 			String marque2, String kilometre2, String puissance2, String capacite2, String carburant2,
@@ -330,8 +319,8 @@ public class Car {
 		Climatisations = climatisations2;
 		this.autresAmenagementsInterieurs = autresAmenagementsInterieurs2;
 		this.pienceJointes = pienceJointes2;
-		this.statut=true;
-		
+		this.statut = true;
+
 	}
 
 	public Integer getCarId() {
@@ -638,10 +627,6 @@ public class Car {
 		this.pienceJointes = pienceJointes;
 	}
 
-	
-	
-	
-
 	public Activity getActivity() {
 		return activity;
 	}
@@ -672,10 +657,10 @@ public class Car {
 
 	public void setDocuments(Set<DocumentRef> documents) {
 		this.documents = documents;
-	//&	this.documents = documents;
-       for(DocumentRef d: documents){
-            d.setCar(this);
-        }
+		// & this.documents = documents;
+		for (DocumentRef d : documents) {
+			d.setCar(this);
+		}
 	}
 
 	@Override

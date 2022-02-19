@@ -27,9 +27,9 @@ public class Favorite {
 	@JsonIgnore
 	private Entreprise entreprise;
 
-	@OneToMany(mappedBy = "favorite",fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "favorite", fetch = FetchType.EAGER)
+	@JsonIgnore
 	private Set<Car> cars = new HashSet<Car>();
-	
 
 	public Long getFavoriteId() {
 		return favoriteId;

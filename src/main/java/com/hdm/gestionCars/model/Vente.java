@@ -18,8 +18,8 @@ public class Vente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer VenteId;
 	private String label;
-	private Date dateDebut;
-	private Date dateFin;
+	private String dateDebut;
+	private String dateFin;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "VenteCar", joinColumns = { @JoinColumn(name = "vente") }, inverseJoinColumns = {
@@ -47,22 +47,22 @@ public class Vente {
 	}
 
 
-	public Date getDateDebut() {
+	public String getDateDebut() {
 		return dateDebut;
 	}
 
 
-	public void setDateDebut(Date dateDebut) {
+	public void setDateDebut(String dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
 
-	public Date getDateFin() {
+	public String getDateFin() {
 		return dateFin;
 	}
 
 
-	public void setDateFin(Date dateFin) {
+	public void setDateFin(String dateFin) {
 		this.dateFin = dateFin;
 	}
 
