@@ -1,15 +1,13 @@
 package com.hdm.gestionCars.request;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.hdm.gestionCars.model.Car;
 import com.hdm.gestionCars.model.Entreprise;
 
 public class ActivityRequest {
 	private Long activityId;
 	private Entreprise entreprise;
-	private Set<Car> cars = new HashSet<Car>();
+//	private Set<Car> cars = new HashSet<Car>();
+	private Car car;
 	private Double price;
 	private String status;
 
@@ -37,16 +35,24 @@ public class ActivityRequest {
 		this.price = price;
 	}
 
-	public Set<Car> getCars() {
-		return cars;
-	}
-
-	public void setCars(Set<Car> cars) {
-		this.cars = cars;
-	}
+//	public Set<Car> getCars() {
+//		return cars;
+//	}
+//
+//	public void setCars(Set<Car> cars) {
+//		this.cars = cars;
+//	}
 
 	public Long getActivityId() {
 		return activityId;
+	}
+
+	public Car getCar() {
+		return car;
+	}
+
+	public void setCar(Car car) {
+		this.car = car;
 	}
 
 	public void setActivityId(Long activityId) {

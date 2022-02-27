@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -54,13 +55,20 @@ public class Car {
 	private String coutsSupplementaires;
 	private String ramasse;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "activity_key", nullable = true)
-	private Activity activity;
+//	@ManyToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "activity_key", nullable = true)
+//	private Activity activity;
+//	
+	@OneToMany(mappedBy = "car")
+	@JsonIgnore
+	private Set<Activity> activities = new HashSet<Activity>();
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "favorite_key", nullable = true)
-	private Favorite favorite;
+//	@ManyToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "favorite_key", nullable = true)
+//	private Favorite favorite;
+
+	@OneToMany(mappedBy = "car")
+	private Set<Favorite> favorites = new HashSet<Favorite>();
 
 	@ManyToOne
 	@JoinColumn(name = "fabricant", nullable = true)
@@ -627,24 +635,40 @@ public class Car {
 		this.pienceJointes = pienceJointes;
 	}
 
-	public Activity getActivity() {
-		return activity;
+//	public Activity getActivity() {
+//		return activity;
+//	}
+//
+//	public void setActivity(Activity activity) {
+//		this.activity = activity;
+//	}
+
+	public Set<Activity> getActivities() {
+		return activities;
 	}
 
-	public void setActivity(Activity activity) {
-		this.activity = activity;
+	public void setActivities(Set<Activity> activities) {
+		this.activities = activities;
 	}
 
-	public Favorite getFavorite() {
-		return favorite;
-	}
-
-	public void setFavorite(Favorite favorite) {
-		this.favorite = favorite;
-	}
+//	public Favorite getFavorite() {
+//		return favorite;
+//	}
+//
+//	public void setFavorite(Favorite favorite) {
+//		this.favorite = favorite;
+//	}
 
 	public Set<MateriauInterieur> getMateriauInterieur() {
 		return materiauInterieur;
+	}
+
+	public Set<Favorite> getFavorites() {
+		return favorites;
+	}
+
+	public void setFavorites(Set<Favorite> favorites) {
+		this.favorites = favorites;
 	}
 
 	public void setMateriauInterieur(Set<MateriauInterieur> materiauInterieur) {
