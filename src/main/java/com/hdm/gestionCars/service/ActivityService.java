@@ -67,5 +67,7 @@ public class ActivityService {
 	public Activity getTargetedActivityById(Long activityId) {
 		return activityDAO.findByActivityId(activityId);
 	}
+	
+	
 
 }

@@ -45,10 +45,8 @@ import com.hdm.gestionCars.model.CouleurInterieur;
 import com.hdm.gestionCars.model.Document;
 import com.hdm.gestionCars.model.DocumentRef;
 import com.hdm.gestionCars.model.Fabricant;
-import com.hdm.gestionCars.model.MateriauInterieur;
-import com.hdm.gestionCars.model.PienceJointe;
 import com.hdm.gestionCars.model.RegulateurVitesse;
-import com.hdm.gestionCars.request.CarRequest;
+import com.hdm.gestionCars.request.CarActivityRequest;
 import com.hdm.gestionCars.request.requestCar;
 import com.hdm.gestionCars.service.IStorageFile;
 import com.hdm.gestionCars.service.ServiceCar;
@@ -198,6 +196,12 @@ public class ControllerCar {
 		System.out.println(map);
 		return map;
 
+	}
+
+	@GetMapping(value = "/listObjects")
+	public ResponseEntity<List<Object>> listsObjects() {
+		List<Object> _Lists = repositoryCar._Lists();
+		return new ResponseEntity<List<Object>>(_Lists, HttpStatus.OK);
 	}
 
 }
