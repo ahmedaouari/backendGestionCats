@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import com.hdm.gestionCars.model.Car;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,19 +37,18 @@ public class Activity {
 
 	private Date activityDate;
 
-	@OneToMany(mappedBy = "activity")
-	@JsonIgnore
-	private Set<Car> cars = new HashSet<Car>();
+	@ManyToOne()
+	private Car car;
 
 	public Activity() {
 		super();
 	}
 
-	public Activity(Long activityId, Entreprise entreprise, Set<Car> cars) {
+	public Activity(Long activityId, Entreprise entreprise,Car cars) {
 		super();
 		this.activityId = activityId;
 		this.entreprise = entreprise;
-		this.cars = cars;
+		this.car= cars;
 	}
 
 	public Long getActivityId() {
@@ -67,12 +67,12 @@ public class Activity {
 		this.entreprise = entreprise;
 	}
 
-	public Set<Car> getCars() {
-		return cars;
+	public void setCars(Car cars) {
+		this.car = cars;
 	}
 
-	public void setCars(Set<Car> cars) {
-		this.cars = cars;
+	public Car getCars() {
+		return car;
 	}
 
 	public Activity_Type getStatus() {

@@ -33,7 +33,7 @@ public class ActivityService {
 		activity.setPrice(request.getPrice());
 
 		request.getCars().stream().forEach(car -> {
-			activity.getCars().add(car);
+			//activity.getCars().add(car);
 		});
 
 		return activityDAO.save(activity);

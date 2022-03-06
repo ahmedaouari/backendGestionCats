@@ -54,9 +54,8 @@ public class Car {
 	private String coutsSupplementaires;
 	private String ramasse;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "activity_key", nullable = true)
-	private Activity activity;
+	@OneToMany(mappedBy = "car",cascade = CascadeType.ALL)
+	private Set<Activity> activities =new HashSet<>();
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "favorite_key", nullable = true)
@@ -627,13 +626,7 @@ public class Car {
 		this.pienceJointes = pienceJointes;
 	}
 
-	public Activity getActivity() {
-		return activity;
-	}
 
-	public void setActivity(Activity activity) {
-		this.activity = activity;
-	}
 
 	public Favorite getFavorite() {
 		return favorite;
@@ -661,6 +654,14 @@ public class Car {
 		for (DocumentRef d : documents) {
 			d.setCar(this);
 		}
+	}
+
+	public Set<Activity> getActivities() {
+		return activities;
+	}
+
+	public void setActivities(Set<Activity> activities) {
+		this.activities = activities;
 	}
 
 	@Override
