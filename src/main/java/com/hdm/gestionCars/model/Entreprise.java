@@ -9,8 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Entreprise {
@@ -35,9 +34,10 @@ public class Entreprise {
 	private String copiePieceDidentiter;
 
 	@OneToMany(mappedBy = "entreprise")
-	@JsonManagedReference
+//	@JsonManagedReference
+	@JsonIgnore
 	private Set<Activity> activities = new HashSet<>();
-	
+
 	@OneToMany(mappedBy = "entreprise")
 	private Set<Favorite> favorites = new HashSet<>();
 

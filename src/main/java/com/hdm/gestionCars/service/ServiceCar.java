@@ -1,5 +1,6 @@
 package com.hdm.gestionCars.service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hdm.gestionCars.DAO.RepositoryCar;
+import com.hdm.gestionCars.model.Activity;
 import com.hdm.gestionCars.model.Car;
-import com.hdm.gestionCars.request.CarActivityRequest;
 
 @Service
 public class ServiceCar {
@@ -23,7 +24,14 @@ public class ServiceCar {
 	}
 
 	public List<Car> findAll() {
-		return repositoryCar.findAll();
+		List<Car> cars = repositoryCar.findAll();
+		cars.stream().forEach(car -> {
+			car.getActivities().stream().sorted(Comparator.comparing(Activity::getPrice));
+//			car.getActivities().stream().sorted(Comparator.comparingDouble(Activity::getPrice).reversed())
+//					.collect(Collectors.toList());
+		});
+
+		return cars;
 	}
 
 	public List<Car> findAllCarEnStock() {
