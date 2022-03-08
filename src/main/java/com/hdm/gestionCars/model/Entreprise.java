@@ -43,7 +43,6 @@ public class Entreprise {
 
 	public Entreprise() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Entreprise(Long entrepriseId, String entrepriseName, String addresse, String codePostal, String ville,

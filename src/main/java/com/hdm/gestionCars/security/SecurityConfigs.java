@@ -23,7 +23,7 @@ public class SecurityConfigs extends WebSecurityConfigurerAdapter {
 	public static final String[] PUBLIC_URLS = { "/api/singin", "/api/singup", "/api/new-activity",
 			"/api/list-activities", "/api/list-activitiesByEntreprise", "/api/list-favoritesByEntreprise",
 			"/api/list-favorites", "/api/users/activate-user", "/api/change/activity", "/api/list-cars", "/api/liste",
-			"/api/listObjects" };
+			"/api/listObjects", "/api/custom-find" };
 
 	private JWTAccessDeniedHandler jwtAccessDeniedHandler;
 	private JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint;

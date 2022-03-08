@@ -106,6 +106,11 @@ public class ControllerCar {
 	public List<Car> readAll() {
 		return repositoryCar.findAll();
 	}
+	
+	@GetMapping("/custom-find")
+	public List<CarActivityRequest> customFindAll() {
+		return repositoryCar.customFindAll();
+	}
 
 	@GetMapping(value = "/list-cars")
 	public List<Car> allCars() {

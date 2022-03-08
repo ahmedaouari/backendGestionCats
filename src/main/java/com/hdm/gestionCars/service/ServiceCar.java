@@ -1,6 +1,6 @@
 package com.hdm.gestionCars.service;
 
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,14 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hdm.gestionCars.DAO.RepositoryCar;
-import com.hdm.gestionCars.model.Activity;
 import com.hdm.gestionCars.model.Car;
+import com.hdm.gestionCars.request.CarActivityRequest;
 
 @Service
 public class ServiceCar {
 
 	@Autowired
 	RepositoryCar repositoryCar;
+	@Autowired
+	ActivityService service;
 
 	public Car save(Car c) {
 		return repositoryCar.saveAndFlush(c);
@@ -25,13 +27,22 @@ public class ServiceCar {
 
 	public List<Car> findAll() {
 		List<Car> cars = repositoryCar.findAll();
+		return cars;
+	}
+	
+	public List<CarActivityRequest> customFindAll() {
+		List<Car> cars = repositoryCar.findAll();
+		List<CarActivityRequest> carActivityRequests = new ArrayList<CarActivityRequest>();
 		cars.stream().forEach(car -> {
-			car.getActivities().stream().sorted(Comparator.comparing(Activity::getPrice));
-//			car.getActivities().stream().sorted(Comparator.comparingDouble(Activity::getPrice).reversed())
-//					.collect(Collectors.toList());
+			
+			CarActivityRequest activityRequest = new CarActivityRequest();
+			Integer theHighestActivityPrice = service.getTheHighestActivityPrice(car.getCarId());
+			activityRequest.setCar(car);
+			activityRequest.setEntrepriseId(theHighestActivityPrice);
+			carActivityRequests.add(activityRequest);
 		});
 
-		return cars;
+		return carActivityRequests;
 	}
 
 	public List<Car> findAllCarEnStock() {
