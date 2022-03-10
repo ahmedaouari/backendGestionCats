@@ -29,12 +29,12 @@ public class ServiceCar {
 		List<Car> cars = repositoryCar.findAll();
 		return cars;
 	}
-	
+
 	public List<CarActivityRequest> customFindAll() {
 		List<Car> cars = repositoryCar.findAll();
 		List<CarActivityRequest> carActivityRequests = new ArrayList<CarActivityRequest>();
 		cars.stream().forEach(car -> {
-			
+
 			CarActivityRequest activityRequest = new CarActivityRequest();
 			Integer theHighestActivityPrice = service.getTheHighestActivityPrice(car.getCarId());
 			activityRequest.setCar(car);
@@ -68,7 +68,23 @@ public class ServiceCar {
 	@Transactional
 	public List<Object> _Lists() {
 		return repositoryCar.listOfAllCars();
+	}
 
+//	list cars by vente
+	@Transactional
+	public List<CarActivityRequest> getListCarsByVente(Integer venteId) {
+		List<Car> cars = repositoryCar.getListCarsByVente(venteId);
+		List<CarActivityRequest> carActivityRequests = new ArrayList<CarActivityRequest>();
+		cars.stream().forEach(car -> {
+
+			CarActivityRequest activityRequest = new CarActivityRequest();
+			Integer theHighestActivityPrice = service.getTheHighestActivityPrice(car.getCarId());
+			activityRequest.setCar(car);
+			activityRequest.setEntrepriseId(theHighestActivityPrice);
+			carActivityRequests.add(activityRequest);
+		});
+
+		return carActivityRequests;
 	}
 
 }
