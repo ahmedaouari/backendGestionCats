@@ -95,6 +95,11 @@ public class ControllerCar {
 		return repositoryCar.findAll();
 	}
 
+	@GetMapping("/custom-find")
+	public List<CarActivityRequest> customFindAll() {
+		return repositoryCar.customFindAll();
+	}
+
 	@GetMapping(value = "/list-cars")
 	public List<Car> allCars() {
 		return repositoryCar.findAll();
@@ -190,6 +195,12 @@ public class ControllerCar {
 	public ResponseEntity<List<Activity>> listsObjects() {
 		List<Activity> _Lists = repositoryCar._Lists();
 		return new ResponseEntity<>(_Lists, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/listCarByVente/{id}")
+	public ResponseEntity<List<CarActivityRequest>> listCarByVente(@PathVariable Integer id) {
+		List<CarActivityRequest> _Lists = repositoryCar.getListCarsByVente(id);
+		return new ResponseEntity<List<CarActivityRequest>>(_Lists, HttpStatus.OK);
 	}
 
 }

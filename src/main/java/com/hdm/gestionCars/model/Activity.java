@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,9 +21,9 @@ public class Activity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long activityId;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "entreprise_key")
-	@JsonBackReference
+//	@JsonBackReference
 	private Entreprise entreprise;
 
 	@Enumerated
@@ -38,6 +39,7 @@ public class Activity {
 
 	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE })
 	@JoinColumn(name = "car_key", nullable = true)
+	@JsonBackReference(value = "caractivity")
 	private Car car;
 
 	public Activity() {

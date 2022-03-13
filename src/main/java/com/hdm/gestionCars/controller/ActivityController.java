@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hdm.gestionCars.model.Activity;
@@ -45,4 +46,18 @@ public class ActivityController {
 	public ResponseEntity<Activity> updateTargetActivity(@RequestBody ActivityRequest request) {
 		return new ResponseEntity<Activity>(activityService.changeStatus(request), HttpStatus.OK);
 	}
+
+	@GetMapping(value = "/max-activityBy-entreprise")
+	public ResponseEntity<List<Object>> listActivitiesByEntrepriseMAXPrice(
+			@RequestParam(value = "entrepriseId") Long entrepriseId) {
+		List<Object> listOfActivitiesFromTheDBMax = activityService.listOfActivitiesFromTheDBMax(entrepriseId);
+		return new ResponseEntity<List<Object>>(listOfActivitiesFromTheDBMax, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/max-activityBy-car/{carId}")
+	public ResponseEntity<Integer> maxActivityByCar(@PathVariable(value = "carId") Integer carId) {
+		Integer theHighestActivityPrice = activityService.getTheHighestActivityPrice(carId);
+		return new ResponseEntity<Integer>(theHighestActivityPrice, HttpStatus.OK);
+	}
+
 }
