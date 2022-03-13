@@ -1,14 +1,18 @@
 package com.hdm.gestionCars.service;
 
+
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
+import com.hdm.gestionCars.service.ServiceEntreprise;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hdm.gestionCars.DAO.ActivityDAO;
 import com.hdm.gestionCars.model.Activity;
 import com.hdm.gestionCars.model.Activity_Type;
+import com.hdm.gestionCars.model.Car;
 import com.hdm.gestionCars.model.Entreprise;
 import com.hdm.gestionCars.request.ActivityRequest;
 
@@ -16,6 +20,7 @@ import com.hdm.gestionCars.request.ActivityRequest;
 public class ActivityService {
 	@Autowired
 	private ActivityDAO activityDAO;
+	
 
 	@Autowired
 	private ServiceEntreprise entreprise;
@@ -31,10 +36,11 @@ public class ActivityService {
 		activity.setStatus(Activity_Type.EN_COURS);
 		activity.setActivityDate(new Date());
 		activity.setPrice(request.getPrice());
-
-		request.getCars().stream().forEach(car -> {
-			//activity.getCars().add(car);
-		});
+		
+		activity.setCar(request.getCar());
+//		request.getCars().stream().forEach(car -> {
+//			activity.getCars().add(car);
+//		});
 
 		return activityDAO.save(activity);
 	}
@@ -63,5 +69,7 @@ public class ActivityService {
 	public Activity getTargetedActivityById(Long activityId) {
 		return activityDAO.findByActivityId(activityId);
 	}
+	
+	
 
 }

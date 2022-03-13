@@ -87,8 +87,8 @@ public class UserServiceImpl implements UserDetailsService {
 		user_.setUsername(user.getUsername());
 		user_.setRole(Role.ROLE_USER.name());
 		user_.setAuthorities(Role.ROLE_USER.getAuthorities());
-//		user_.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		user_.setPassword(user.getPassword());
+		user_.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+//		user_.setPassword(user.getPassword());
 		user_.setActive(true);
 		user_.setFonction(user.getFonction());
 

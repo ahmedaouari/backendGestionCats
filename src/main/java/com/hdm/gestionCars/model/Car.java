@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -23,7 +24,7 @@ public class Car {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer carId;
-	private boolean statut;
+	private Boolean statut;
 	private String model;
 	private String variante;
 	private String conception;
@@ -40,9 +41,9 @@ public class Car {
 	private String cO2;
 
 	private String typePeinture;
-	private int nbrPortes;
-	private int nbrplaces;
-	private int nbrCles;
+	private Integer nbrPortes;
+	private Integer nbrplaces;
+	private Integer nbrCles;
 	private String evaluateur;
 
 	private String prixReserve;
@@ -54,12 +55,20 @@ public class Car {
 	private String coutsSupplementaires;
 	private String ramasse;
 
-	@OneToMany(mappedBy = "car",cascade = CascadeType.ALL)
-	private Set<Activity> activities =new HashSet<>();
+//	@ManyToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "activity_key", nullable = true)
+//	private Activity activity;
+//	
+	@OneToMany(mappedBy = "car")
+	@JsonIgnore
+	private Set<Activity> activities = new HashSet<Activity>();
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "favorite_key", nullable = true)
-	private Favorite favorite;
+//	@ManyToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "favorite_key", nullable = true)
+//	private Favorite favorite;
+
+	@OneToMany(mappedBy = "car")
+	private Set<Favorite> favorites = new HashSet<Favorite>();
 
 	@ManyToOne
 	@JoinColumn(name = "fabricant", nullable = true)
@@ -626,18 +635,32 @@ public class Car {
 		this.pienceJointes = pienceJointes;
 	}
 
+//	public Activity getActivity() {
+//		return activity;
+//	}
+//
+//	public void setActivity(Activity activity) {
+//		this.activity = activity;
+//	}
 
-
-	public Favorite getFavorite() {
-		return favorite;
-	}
-
-	public void setFavorite(Favorite favorite) {
-		this.favorite = favorite;
-	}
+//	public Favorite getFavorite() {
+//		return favorite;
+//	}
+//
+//	public void setFavorite(Favorite favorite) {
+//		this.favorite = favorite;
+//	}
 
 	public Set<MateriauInterieur> getMateriauInterieur() {
 		return materiauInterieur;
+	}
+
+	public Set<Favorite> getFavorites() {
+		return favorites;
+	}
+
+	public void setFavorites(Set<Favorite> favorites) {
+		this.favorites = favorites;
 	}
 
 	public void setMateriauInterieur(Set<MateriauInterieur> materiauInterieur) {

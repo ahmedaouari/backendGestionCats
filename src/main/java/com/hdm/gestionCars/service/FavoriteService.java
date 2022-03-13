@@ -27,9 +27,10 @@ public class FavoriteService {
 			Entreprise createNewEntreprise = entreprise.createNewEntreprise(_Entreprise);
 			favorite.setEntreprise(createNewEntreprise);
 		}
-		request.getCars().stream().forEach(car -> {
-			favorite.getCars().add(car);
-		});
+//		request.getCars().stream().forEach(car -> {
+//			favorite.getCars().add(car);
+//		});
+		favorite.setCar(request.getCar());
 		return favoriteDAO.save(favorite);
 	}
 

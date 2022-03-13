@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import com.hdm.gestionCars.model.*;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -33,22 +34,7 @@ import com.hdm.gestionCars.DAO.RepositoryDocument;
 import com.hdm.gestionCars.DAO.RepositoryFabricant;
 import com.hdm.gestionCars.DAO.RepositoryMatriaulInterieur;
 import com.hdm.gestionCars.DAO.RepositoryRegulateurVitesse;
-import com.hdm.gestionCars.model.AideStationnement;
-import com.hdm.gestionCars.model.AttelageRemorque;
-import com.hdm.gestionCars.model.Autre;
-import com.hdm.gestionCars.model.AutresAmenagementsInt;
-import com.hdm.gestionCars.model.AutresEquipement;
-import com.hdm.gestionCars.model.Car;
-import com.hdm.gestionCars.model.Climatisation;
-import com.hdm.gestionCars.model.CouleurExterieur;
-import com.hdm.gestionCars.model.CouleurInterieur;
-import com.hdm.gestionCars.model.Document;
-import com.hdm.gestionCars.model.DocumentRef;
-import com.hdm.gestionCars.model.Fabricant;
-import com.hdm.gestionCars.model.MateriauInterieur;
-import com.hdm.gestionCars.model.PienceJointe;
-import com.hdm.gestionCars.model.RegulateurVitesse;
-import com.hdm.gestionCars.request.CarRequest;
+import com.hdm.gestionCars.request.CarActivityRequest;
 import com.hdm.gestionCars.request.requestCar;
 import com.hdm.gestionCars.service.IStorageFile;
 import com.hdm.gestionCars.service.ServiceCar;
@@ -198,6 +184,12 @@ public class ControllerCar {
 		System.out.println(map);
 		return map;
 
+	}
+
+	@GetMapping(value = "/listObjects")
+	public ResponseEntity<List<Activity>> listsObjects() {
+		List<Activity> _Lists = repositoryCar._Lists();
+		return new ResponseEntity<>(_Lists, HttpStatus.OK);
 	}
 
 }

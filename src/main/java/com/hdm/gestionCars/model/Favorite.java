@@ -1,8 +1,5 @@
 package com.hdm.gestionCars.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,9 +23,14 @@ public class Favorite {
 	@JsonIgnore
 	private Entreprise entreprise;
 
-	@OneToMany(mappedBy = "favorite", fetch = FetchType.EAGER)
+//	@OneToMany(mappedBy = "favorite", fetch = FetchType.EAGER)
+//	@JsonIgnore
+//	private Set<Car> cars = new HashSet<Car>();
+
+	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE })
+	@JoinColumn(name = "car_key", nullable = true)
 	@JsonIgnore
-	private Set<Car> cars = new HashSet<Car>();
+	private Car car;
 
 	public Long getFavoriteId() {
 		return favoriteId;
@@ -46,13 +47,21 @@ public class Favorite {
 	public void setEntreprise(Entreprise entreprise) {
 		this.entreprise = entreprise;
 	}
+//
+//	public Set<Car> getCars() {
+//		return cars;
+//	}
+//
+//	public void setCars(Set<Car> cars) {
+//		this.cars = cars;
+//	}
 
-	public Set<Car> getCars() {
-		return cars;
+	public Car getCar() {
+		return car;
 	}
 
-	public void setCars(Set<Car> cars) {
-		this.cars = cars;
+	public void setCar(Car car) {
+		this.car = car;
 	}
 
 }
